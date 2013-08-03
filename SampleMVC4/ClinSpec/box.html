@@ -1,0 +1,377 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ClinSpec.SiteMaster" %>
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>  <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<!-- Mirrored from themes.shamsoft.net/flaty/box.html by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 31 Jul 2013 02:17:36 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Box - FLATY Admin</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!--base css styles-->
+    <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/normalize/normalize.css">
+
+    <!--page specific css styles-->
+
+    <!--flaty css styles-->
+    <link rel="stylesheet" href="css/flaty.css">
+    <link rel="stylesheet" href="css/flaty-responsive.css">
+
+    <link rel="shortcut icon" href="img/favicon.html">
+
+    <script src="assets/modernizr/modernizr-2.6.2.min.js"></script>
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+</head>
+<body>
+
+        <form runat="server">
+    <asp:ScriptManager runat="server">
+        <Scripts>
+            <%--Framework Scripts--%>
+            <asp:ScriptReference Name="MsAjaxBundle" />
+            <asp:ScriptReference Name="jquery" />
+            <asp:ScriptReference Name="jquery.ui.combined" />
+            <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+            <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+            <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+            <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+            <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+            <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+            <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+            <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+            <asp:ScriptReference Name="WebFormsBundle" />
+            <%--Site Scripts--%>
+
+        </Scripts>
+    </asp:ScriptManager>
+
+    <!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+
+
+
+
+    <div id="navbar" class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+
+                <a href="#" class="brand">
+                    <small>
+                        <i class="icon-desktop"></i>
+                        Clinical Study Specificaiton Tool
+                    </small>
+                </a>
+
+                <a href="#" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                    <i class="icon-reorder"></i>
+                </a>
+
+                <ul class="nav flaty-nav pull-right">
+                        <li class="user-profile">
+                            <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
+                                <img class="nav-user-photo" src="img/demo/avatar/avatar1.jpg" alt="Penny's Photo" />
+                                <span class="hidden-phone" id="user_info">[User Information]</span>
+                                <i class="icon-caret-down"></i>
+                            </a>
+                        <ul class="dropdown-menu dropdown-navbar" id="user_menu">
+                            <li class="nav-header">
+                                <i class="icon-time"></i>
+                                Logined From [Timer]
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-cog"></i>
+                                    [Page:Account Settings]
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                  [Page:Edit Profile]
+
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-question"></i>
+                                    [Page: Help]
+</a>
+                            </li>
+
+                            <li class="divider visible-phone"></li>
+
+                            <li class="visible-phone">
+                                <a href="#">
+                                    <i class="icon-tasks"></i>
+                                    Tasks
+                                    <span class="badge badge-warning">4</span>
+                                </a>
+                            </li>
+                            <li class="visible-phone">
+                                <a href="#">
+                                    <i class="icon-bell-alt"></i>
+                                    Notifications
+                                    <span class="badge badge-important">8</span>
+                                </a>
+                            </li>
+                            <li class="visible-phone">
+                                <a href="#">
+                                    <i class="icon-envelope"></i>
+                                    Messages
+                                    <span class="badge badge-success">5</span>
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-off"></i>
+                                    Logout
+</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+
+
+
+    <div class="container-fluid" id="main-container">
+
+        <div id="sidebar" class="nav-collapse">
+
+            <ul class="nav nav-list">
+
+                <li>
+                    <form target="#" method="GET" class="search-form">
+                        <span class="search-pan">
+                            <button type="submit">
+                                <i class="icon-search"></i>
+                            </button>
+                            <input type="text" name="search" placeholder="Search ..." autocomplete="off" />
+                        </span>
+                    </form>
+                </li>
+
+                <li>
+                    <a href="index-2.html">
+                        <i class="icon-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="typography.html">
+                        <i class="icon-text-width"></i>
+                        <span>Typography</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-desktop"></i>
+                        <span>UI Elements</span>
+                        <b class="arrow icon-angle-right"></b>
+                    </a>
+
+
+                    <ul class="submenu">
+                        <li><a href="ui_general.html">General</a></li>
+                        <li><a href="ui_button.html">Button</a></li>
+                        <li><a href="ui_slider.html">Slider</a></li>
+                        <li><a href="ui_chart.html">Chart</a></li>
+                        <li><a href="ui_message.html">Conversation</a></li>
+                        <li><a href="ui_icon.html">Icon</a></li>
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span>Forms</span>
+                        <b class="arrow icon-angle-right"></b>
+                    </a>
+
+
+                    <ul class="submenu">
+                        <li><a href="form_layout.html">Layout</a></li>
+                        <li><a href="form_component.html">Component</a></li>
+                        <li><a href="form_wizard.html">Wizard</a></li>
+                        <li><a href="form_validation.html">Validation</a></li>
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-list"></i>
+                        <span>Tables</span>
+                        <b class="arrow icon-angle-right"></b>
+                    </a>
+
+
+                    <ul class="submenu">
+                        <li><a href="table_basic.html">Basic</a></li>
+                        <li><a href="table_advance.html">Advance</a></li>
+                        <li><a href="table_dynamic.html">Dynamic</a></li>
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-globe"></i>
+                        <span>Maps</span>
+                        <b class="arrow icon-angle-right"></b>
+                    </a>
+
+
+                    <ul class="submenu">
+                        <li><a href="map_google.html">Google Maps</a></li>
+                        <li><a href="map_vector.html">Vector Maps</a></li>
+                    </ul>
+
+                </li>
+
+                <li class="active">
+                    <a href="box.html">
+                        <i class="icon-list-alt"></i>
+                        <span>Box</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="calendar.html">
+                        <i class="icon-calendar"></i>
+                        <span>Calendar</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="gallery.html">
+                        <i class="icon-picture"></i>
+                        <span>Gallery</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="grid.html">
+                        <i class="icon-th"></i>
+                        <span>Griding System</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-file-text-alt"></i>
+                        <span>Sample Pages</span>
+                        <b class="arrow icon-angle-right"></b>
+                    </a>
+
+
+                    <ul class="submenu">
+                        <li><a href="extra_login.html">Login &amp; Register</a></li>
+                        <li><a href="extra_profile.html">User Profile</a></li>
+                        <li><a href="extra_invoice.html">Invoice</a></li>
+                        <li><a href="extra_search.html">Search Results</a></li>
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-file"></i>
+                        <span>Other Pages</span>
+                        <b class="arrow icon-angle-right"></b>
+                    </a>
+
+
+                    <ul class="submenu">
+                        <li><a href="more_blank.html">Blank Page</a></li>
+                        <li><a href="more_error-404.html">Error 404</a></li>
+                        <li><a href="more_error-500.html">Error 500</a></li>
+                        <li><a href="more_set-skin.html">Skin</a></li>
+                        <li><a href="more_set-sidebar-navbar-color.html">Sidebar &amp; Navbar</a></li>
+                        <li><a href="more_sidebar-collapsed.html">Collapsed Sidebar</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+
+
+
+            <div id="sidebar-collapse" class="visible-desktop">
+                <i class="icon-double-angle-left"></i>
+            </div>
+
+        </div>
+
+
+
+        <div id="main-content">
+
+            <div class="page-title">
+                <div>
+                    <h1><%: Page.Title %> </h1>
+                </div>
+            </div>
+
+            <div id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home"></i>
+                        <a href="index-2.html">Home</a>
+                        <span class="divider"><i class="icon-angle-right"></i></span>
+                    </li>
+                    <li class="active">Box</li>
+                </ul>
+            </div>
+
+    <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+
+            <footer>
+                <p><% DateTime.Now.Year %> © [CompanyName].</p>
+            </footer>
+
+            <a id="btn-scrollup" class="btn btn-circle btn-large" href="#"><i class="icon-chevron-up"></i></a>
+        </div>
+
+    </div>
+
+
+    <!--basic scripts-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->
+    <script>window.jQuery || document.write('<script src="assets/jquery/jquery-1.10.1.min.js"><\/script>')</script>
+    <script src="assets/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/nicescroll/jquery.nicescroll.min.js"></script>
+
+    <!--page specific plugin scripts-->
+
+       </form>
+    <!--flaty scripts-->
+    <script src="js/flaty.js"></script>
+</body>
+</html>
