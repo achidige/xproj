@@ -12,16 +12,30 @@ namespace DataAccess
     using System;
     using System.Collections.Generic;
     
-    public abstract partial class CodeList
+    public partial class CodeList
     {
         public CodeList()
         {
             this.CodeListValues = new HashSet<CodeListValues>();
+            this.Variables = new HashSet<Variable>();
+            this.DerivedCodeLists = new HashSet<CodeList>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> VariableId { get; set; }
+        public string DefinitionText { get; set; }
+        public string Description { get; set; }
+        public VariableDataType DataType { get; set; }
+        public bool IsStandard { get; set; }
+        public bool IsTemplate { get; set; }
+        public Nullable<int> CodeListId { get; set; }
+        public Nullable<int> MetaDataVersionId { get; set; }
     
         public virtual ICollection<CodeListValues> CodeListValues { get; set; }
+        public virtual ICollection<Variable> Variables { get; set; }
+        public virtual ICollection<CodeList> DerivedCodeLists { get; set; }
+        public virtual CodeList SourceCodeList { get; set; }
+        public virtual MetaDataVersion MetaDataVersion { get; set; }
     }
 }

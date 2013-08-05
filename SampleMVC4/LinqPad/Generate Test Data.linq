@@ -9,121 +9,128 @@
     <AppConfigPath>C:\Users\achidige\Documents\GitHub\xproj\SampleMVC4\DataAccess\App.config</AppConfigPath>
     <DisplayName>SpecToolModelContext</DisplayName>
   </Connection>
+  <Namespace>System.Reflection.Emit</Namespace>
 </Query>
 
 void Main()
 {
 //	SetupCompAndStudy();
-//	SetupSpeciaications();
+//
+AddDomain(2,2);
+
+(
+from d in Domains
+	let vars = d.Variables
+	//let domainStudy = d.Studies
+	from v in vars
+	let cl = v.CodeList
+	let clvList = cl.CodeListValues	
+	let clvListFirst = 	clvList.FirstOrDefault()
+	//from clv in clvList
+		orderby clvList.Count descending
+	select new { DomainId=d.Id,DomainName=d.Name,VariableId=v.Id,VariablName=v.Name,v.CodeListId,clvList.Count, clvListFirstId= ((clvListFirst==null)?0:clvListFirst.Id) }
+	
+). Dump();	
+
+//
+//
+//	(from d in Domains
+//	let vars = d.Variables
+//	where d.StudyId ==null
+//	select new { d,vars }
+//	).Dump();
 //	
-//		
-//	(from c in  Components
+//	(from v in Variables
+//	orderby v.Id descending
+//	select v).Dump();
+	
+//	(from c in  Compounds
 //	select c).Dump();
 //	(from s in  Studies
 //	select s).Dump();
-//	(from spec in Specifications
-//	select spec).Dump();		
-
-//SteupFirstSpec();
-	
-	(from spec in Specifications
-	
-	let specdms = spec.SpecDomains
-	from specdm in specdms
-	let d = specdm.Domain
-	select new { SpecName =spec.Name,d } ).Dump();							
-
-
-
+//
+//
+//string pDomain = null;
+//string pVar = null;
+//string pCL = "AESEV";
+//
+//
+//(
+//	from s in Studies
+//	let stdms = s.Domains
+//	from d in stdms
+//	let vars = d.Variables
+//	from v in vars
+//	let cl = v.CodeList
+//	let clv = cl.CodeListValues
+//	
+//	orderby clv.Count descending
+//	select new { DomainName=d.Name,VariablName=v.Name,cl.Name,clv.Count,clv } 
+//	
+//	
+//).Dump();
+//
+//
+//(from cl in CodeLists
+//where (pCL ==null || cl.Name==pCL)
+//select cl).Dump();
+//
 
 
 }
 
-void SteupFirstSpec()
-{
-	var spec  = (from sp in Specifications
-				where sp.Name == "Comp 1 Study 1 Spec 1"
-				select sp).FirstOrDefault();
-	
-	var standardDomains = from mdr in MDRs
-						  let dms = mdr.StandardDomains
-						  from d in dms
-					      select d;
-						  
-	foreach (var standardDomain in standardDomains)
-	{
-		var specDomain  = new SpecDomain();
-		specDomain.Domain = standardDomain;
-		specDomain.Specification  = spec;
-		
-		SpecDomains.Add(specDomain);
-		
-	}
-	this.SaveChanges();
-		
-}
 
-void SetupSpeciaications()
-{
-	for(var iComp = 1; iComp<=4;iComp++)
-	{
-		for(var iStudy = 1; iStudy<=2;iStudy++)
-		{
-			for(var iSpec = 1; iSpec<=2;iSpec++)
-			{
-					var compName = string.Format("Comp {0}",Convert.ToString(iComp));
-					var studyName = string.Format("{0} Study {1}",compName, Convert.ToString(iStudy));
-					var specName = string.Format("{0} Spec {1}",studyName,Convert.ToString(iSpec));
-					
-						
-		
-					var checkSpec = (from sp in Specifications
-									where sp.Name == specName 
-									select sp).FirstOrDefault();
-									
-					if(checkSpec == null)
-					{
-						var spec = new Specification();
-						spec.Name = specName;
-						spec.Description = "";
-						spec.StudyId = (from st in Studies
-										where st.Name == studyName
-										select st.Id).FirstOrDefault();
-								
-						Specifications.Add(spec);
-						
-					}														
-			}
-		}
-	}
-	
-	this.SaveChanges();
-}
 
-void GenerateSpecificationOutput()
+void AddDomain(int StudyId,int SourceDomainId)
 {
 
+var sourceDomain  = (from d in Domains 
+			where d.Id == SourceDomainId
+			select d).FirstOrDefault();
+
+//sourceDomain.Dump();
+
+var study  = (from d in Studies 
+			where d.Id == StudyId
+			select d).FirstOrDefault();
+
+//study.Dump();
+
+var clonedDomain = 
+this.Domains.AsNoTracking()
+.Include(d => d.Variables.Select(v=> v.CodeList))
+.Include(d => d.Variables.Select(v=> v.CodeList.CodeListValues))
+.FirstOrDefault(e => e.Id == SourceDomainId);
+
+clonedDomain.StudyId=StudyId;
+clonedDomain.SourceDomain = sourceDomain;
+clonedDomain.MetaDataVersionId = null;
+
+this.Domains.Add(clonedDomain);
+
+this.SaveChanges();
 
 }
+
 
 void SetupCompAndStudy()
 {
 
 	var studyAdded = false;
 	var compAdded= false;
-	//add 5 components
+	//add 5 Compounds
 	for(var i=1;i<=4;i++)
 	{
 		var compName = string.Format("Comp {0}",Convert.ToString(i));
 		
-		var checkComp = (from c in Components
+		var checkComp = (from c in Compounds
 						where c.Name == compName 
 						select c).FirstOrDefault();
 						
 		if(checkComp == null)
 		{
 			compAdded=true;
-			Components.Add( new Component() { Name = compName } );
+			Compounds.Add( new Compound() { Name = compName } );
 		}
 	}
 	
@@ -133,7 +140,7 @@ void SetupCompAndStudy()
 //add 3 studies per component
 
 	
-	var comps  = from c in  Components
+	var comps  = from c in  Compounds
 	select c;
 	
 	foreach(var comp in comps)
@@ -144,13 +151,13 @@ void SetupCompAndStudy()
 			
 			var checkStudy= (
 						from s in Studies
-						where  s.Name == studyName && s.ComponentId == comp.Id
+						where  s.Name == studyName && s.CompoundId == comp.Id
 						select s).FirstOrDefault();
 						
 			if(checkStudy == null)
 			{
 				studyAdded = true;	
-				Studies.Add( new Study() { Name = studyName, ComponentId=comp.Id } );
+				Studies.Add( new Study() { Name = studyName, CompoundId=comp.Id } );
 			}
 		}
 	}
@@ -159,5 +166,3 @@ void SetupCompAndStudy()
 		this.SaveChanges();
 
 }
-
-// Define other methods and classes here

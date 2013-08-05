@@ -16,14 +16,14 @@ namespace DataAccess
     {
         public Study()
         {
-            this.Specifications = new HashSet<Specification>();
+            this.Domains = new HashSet<Domain>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int ComponentId { get; set; }
+        public int CompoundId { get; set; }
     
-        public virtual ICollection<Specification> Specifications { get; set; }
-        public virtual Component Component { get; set; }
+        public virtual Compound Compound { get; set; }
+        public virtual ICollection<Domain> Domains { get; set; }
     }
 }

@@ -73,7 +73,7 @@
         <div class="navbar-inner">
             <div class="container-fluid">
 
-                <a href="#" class="brand">
+                <a href="Default.aspx" class="brand">
                     <small>
                         <i class="icon-desktop"></i>
                         Clinical Study Specificaiton Tool

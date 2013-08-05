@@ -56,47 +56,20 @@
     <Compile Include="CodeListValues.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Component.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CustomCodeList.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CustomDomain.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CustomVariable.cs">
+    <Compile Include="Compound.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domaintype.cs">
+    <Compile Include="DomainClass.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DomainVariable.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MDR.cs">
+    <Compile Include="MetaDataVersion.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Purpose.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SpecCodeListValues.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SpecDomain.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SpecDomainVariable.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Specification.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SpecToolModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,19 +85,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SpecToolModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="StandardCodeList.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StandardDomain.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StandardVariable.cs">
-      <DependentUpon>SpecToolModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Study.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="VaraibleMandatory.cs">
+      <DependentUpon>SpecToolModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Variable.cs">
+      <DependentUpon>SpecToolModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VariableCore.cs">
+      <DependentUpon>SpecToolModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VariableDataType.cs">
+      <DependentUpon>SpecToolModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VariableOrgin.cs">
+      <DependentUpon>SpecToolModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VariableRole.cs">
       <DependentUpon>SpecToolModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -136,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="codelist_item_all.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="domain_variable_TestStudy.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="SpecToolModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -12,20 +12,30 @@ namespace DataAccess
     using System;
     using System.Collections.Generic;
     
-    public abstract partial class Domain
+    public partial class Domain
     {
         public Domain()
         {
-            this.DomainVariables = new HashSet<DomainVariable>();
-            this.SpecDomains = new HashSet<SpecDomain>();
+            this.Variables = new HashSet<Variable>();
+            this.DerivedDomains = new HashSet<Domain>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Domaintype Classification { get; set; }
-        public Purpose Purpose { get; set; }
+        public string Description { get; set; }
+        public DomainClass Class { get; set; }
+        public string StructureDescription { get; set; }
+        public string CommentText { get; set; }
+        public bool IsStandard { get; set; }
+        public bool IsTemplate { get; set; }
+        public Nullable<int> StudyId { get; set; }
+        public Nullable<int> DomainId { get; set; }
+        public Nullable<int> MetaDataVersionId { get; set; }
     
-        public virtual ICollection<DomainVariable> DomainVariables { get; set; }
-        public virtual ICollection<SpecDomain> SpecDomains { get; set; }
+        public virtual ICollection<Variable> Variables { get; set; }
+        public virtual Study Study { get; set; }
+        public virtual ICollection<Domain> DerivedDomains { get; set; }
+        public virtual Domain SourceDomain { get; set; }
+        public virtual MetaDataVersion MetaDataVersion { get; set; }
     }
 }

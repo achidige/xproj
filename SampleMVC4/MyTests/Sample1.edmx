@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Sample1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="Sample1TargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Sample1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Sample1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TreeNodes" EntityType="Sample1.TreeNode" />
+          <AssociationSet Name="TreeNodeTreeNode" Association="Sample1.TreeNodeTreeNode">
+            <End Role="TreeNode" EntitySet="TreeNodes" />
+            <End Role="TreeNode1" EntitySet="TreeNodes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TreeNode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="ParentNode" Relationship="Sample1.TreeNodeTreeNode" FromRole="TreeNode" ToRole="TreeNode1" />
+          <NavigationProperty Name="ChildNodes" Relationship="Sample1.TreeNodeTreeNode" FromRole="TreeNode1" ToRole="TreeNode" />
+          <Property Type="Int32" Name="TreeNodeId" Nullable="true" />
+        </EntityType>
+        <Association Name="TreeNodeTreeNode">
+          <End Type="Sample1.TreeNode" Role="TreeNode" Multiplicity="0..1" />
+          <End Type="Sample1.TreeNode" Role="TreeNode1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TreeNode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TreeNode1">
+              <PropertyRef Name="TreeNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Sample1" />
+        <Alias Key="Target" Value="Sample1.Store" />
+        <EntityContainerMapping CdmEntityContainer="Sample1Container" StorageEntityContainer="Sample1TargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -12,18 +12,34 @@ namespace DataAccess
     using System;
     using System.Collections.Generic;
     
-    public abstract partial class Variable
+    public partial class Variable
     {
         public Variable()
         {
-            this.DomainVariables = new HashSet<DomainVariable>();
+            this.DerivedVariables = new HashSet<Variable>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string DomainVariablePattern { get; set; }
+        public string BaseName { get; set; }
+        public string LableText { get; set; }
+        public VariableCore Core { get; set; }
+        public VariableOrgin Origin { get; set; }
+        public VaraibleMandatory Mandatory { get; set; }
+        public VariableRole Role { get; set; }
+        public Nullable<int> CodeListId { get; set; }
+        public string CommentText { get; set; }
+        public int DomainId { get; set; }
+        public bool IsStandard { get; set; }
+        public bool IsTemplate { get; set; }
+        public Nullable<int> VariableId { get; set; }
+        public int Length { get; set; }
+        public Nullable<int> SignificantDigits { get; set; }
+        public VariableDataType DataType { get; set; }
     
-        public virtual ICollection<DomainVariable> DomainVariables { get; set; }
+        public virtual CodeList CodeList { get; set; }
+        public virtual Domain Domain { get; set; }
+        public virtual ICollection<Variable> DerivedVariables { get; set; }
+        public virtual Variable SourceVariable { get; set; }
     }
 }

@@ -4,46 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cda79d2d347842638994b903be8a7439" Name="Diagram1" ZoomLevel="118" >
-        <EntityTypeShape EntityType="SpecToolModel.Domain" Width="4.75" PointX="12.875" PointY="0.5" />
-        <EntityTypeShape EntityType="SpecToolModel.Variable" Width="1.5" PointX="10.75" PointY="3" />
-        <EntityTypeShape EntityType="SpecToolModel.MDR" Width="2.625" PointX="4.25" PointY="10.5" />
-        <EntityTypeShape EntityType="SpecToolModel.Specification" Width="1.5" PointX="6.625" PointY="2" />
-        <EntityTypeShape EntityType="SpecToolModel.Component" Width="1.5" PointX="1.875" PointY="2.125" />
-        <EntityTypeShape EntityType="SpecToolModel.Study" Width="1.5" PointX="4.75" PointY="1.875" />
-        <AssociationConnector Association="SpecToolModel.StudySpecification" />
+      <Diagram DiagramId="cda79d2d347842638994b903be8a7439" Name="Diagram1" ZoomLevel="81" >
+        <EntityTypeShape EntityType="SpecToolModel.Compound" Width="1.5" PointX="10.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpecToolModel.Study" Width="1.5" PointX="14.375" PointY="2.125" IsExpanded="true" />
         <AssociationConnector Association="SpecToolModel.ComponentStudy" />
-        <EntityTypeShape EntityType="SpecToolModel.DomainVariable" Width="1.5" PointX="10.75" PointY="5.75" />
-        <EntityTypeShape EntityType="SpecToolModel.CodeList" Width="1.5" PointX="15.5" PointY="5.875" />
-        <EntityTypeShape EntityType="SpecToolModel.CodeListValues" Width="1.5" PointX="12.75" PointY="10.375" />
+        <EntityTypeShape EntityType="SpecToolModel.CodeList" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpecToolModel.CodeListValues" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="SpecToolModel.CodeListCodeListValues" />
-        <AssociationConnector Association="SpecToolModel.DomainDomainVariable" />
-        <AssociationConnector Association="SpecToolModel.VariableDomainVariable" />
-        <EntityTypeShape EntityType="SpecToolModel.StandardDomain" Width="1.5" PointX="3.25" PointY="7.75" />
-        <InheritanceConnector EntityType="SpecToolModel.StandardDomain" />
-        <EntityTypeShape EntityType="SpecToolModel.StandardVariable" Width="1.5" PointX="7.75" PointY="7.75" />
-        <InheritanceConnector EntityType="SpecToolModel.StandardVariable" />
-        <AssociationConnector Association="SpecToolModel.MDRStandardDomain" />
-        <AssociationConnector Association="SpecToolModel.MDRStandardVariable" />
-        <EntityTypeShape EntityType="SpecToolModel.CustomDomain" Width="2.125" PointX="23.5" PointY="5.75" />
-        <EntityTypeShape EntityType="SpecToolModel.CustomVariable" Width="3.875" PointX="18.625" PointY="5.75" />
-        <InheritanceConnector EntityType="SpecToolModel.CustomDomain" />
-        <InheritanceConnector EntityType="SpecToolModel.CustomVariable" />
-        <EntityTypeShape EntityType="SpecToolModel.StandardCodeList" Width="1.5" PointX="10.125" PointY="9.25" />
-        <EntityTypeShape EntityType="SpecToolModel.CustomCodeList" Width="1.5" PointX="18.5" PointY="8.25" />
-        <InheritanceConnector EntityType="SpecToolModel.StandardCodeList" />
-        <InheritanceConnector EntityType="SpecToolModel.CustomCodeList" />
-        <AssociationConnector Association="SpecToolModel.MDRStandardCodeList" />
-        <EntityTypeShape EntityType="SpecToolModel.SpecDomain" Width="1.5" PointX="4.125" PointY="5.25" />
-        <AssociationConnector Association="SpecToolModel.SpecificationSpecDomain" />
-        <EntityTypeShape EntityType="SpecToolModel.SpecDomainVariable" Width="1.875" PointX="13" PointY="6.25" />
-        <AssociationConnector Association="SpecToolModel.DomainVariableSpecDomainVariable" />
-        <AssociationConnector Association="SpecToolModel.SpecificationSpecDomainVariable" />
-        <EntityTypeShape EntityType="SpecToolModel.SpecCodeListValues" Width="1.5" PointX="17.875" PointY="11.5" />
-        <AssociationConnector Association="SpecToolModel.CodeListValuesSpecCodeListValues" />
-        <AssociationConnector Association="SpecToolModel.SpecificationSpecCodeListValues" />
-        <AssociationConnector Association="SpecToolModel.DomainSpecDomain" />
-      </Diagram>
+        <EntityTypeShape EntityType="SpecToolModel.Domain" Width="2.75" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="SpecToolModel.Variable" Width="1.5" PointX="2.375" PointY="5.75" />
+        <AssociationConnector Association="SpecToolModel.CodeListVariable" />
+        <AssociationConnector Association="SpecToolModel.DomainVariable" />
+        <AssociationConnector Association="SpecToolModel.StudyDomain" />
+        <AssociationConnector Association="SpecToolModel.SourceDomainDomainRelation" />
+        <AssociationConnector Association="SpecToolModel.VariableVariable" />
+        <AssociationConnector Association="SpecToolModel.CodeListCodeList" />
+        <EntityTypeShape EntityType="SpecToolModel.MetaDataVersion" Width="1.5" PointX="10.75" PointY="5.375" />
+        <AssociationConnector Association="SpecToolModel.MetaDataVersionDomain" />
+        <AssociationConnector Association="SpecToolModel.MetaDataVersionCodeList" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

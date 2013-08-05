@@ -14,17 +14,11 @@ namespace DataAccess
     
     public partial class CodeListValues
     {
-        public CodeListValues()
-        {
-            this.SpecCodeListValues = new HashSet<SpecCodeListValues>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
         public int CodeListId { get; set; }
     
         public virtual CodeList CodeList { get; set; }
-        public virtual ICollection<SpecCodeListValues> SpecCodeListValues { get; set; }
     }
 }

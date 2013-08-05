@@ -6,146 +6,60 @@
     <edmx:StorageModels>
     <Schema Namespace="SpecToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="SpecToolModelStoreContainer">
-    <EntitySet Name="MDRs" EntityType="SpecToolModel.Store.MDRs" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Specifications" EntityType="SpecToolModel.Store.Specifications" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Components" EntityType="SpecToolModel.Store.Components" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Domains" EntityType="SpecToolModel.Store.Domains" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Variables" EntityType="SpecToolModel.Store.Variables" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Compounds" EntityType="SpecToolModel.Store.Compounds" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Studies" EntityType="SpecToolModel.Store.Studies" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DomainVariables" EntityType="SpecToolModel.Store.DomainVariables" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CodeLists" EntityType="SpecToolModel.Store.CodeLists" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CodeListValues" EntityType="SpecToolModel.Store.CodeListValues" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SpecDomains" EntityType="SpecToolModel.Store.SpecDomains" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SpecDomainVariables" EntityType="SpecToolModel.Store.SpecDomainVariables" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SpecCodeListValues" EntityType="SpecToolModel.Store.SpecCodeListValues" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Domains_StandardDomain" EntityType="SpecToolModel.Store.Domains_StandardDomain" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Variables_StandardVariable" EntityType="SpecToolModel.Store.Variables_StandardVariable" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CodeLists_StandardCodeList" EntityType="SpecToolModel.Store.CodeLists_StandardCodeList" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Domains_CustomDomain" EntityType="SpecToolModel.Store.Domains_CustomDomain" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Variables_CustomVariable" EntityType="SpecToolModel.Store.Variables_CustomVariable" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CodeLists_CustomCodeList" EntityType="SpecToolModel.Store.CodeLists_CustomCodeList" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="StudySpecification" Association="SpecToolModel.Store.StudySpecification">
-      <End Role="Study" EntitySet="Studies" />
-      <End Role="Specification" EntitySet="Specifications" />
-    </AssociationSet>
+    <EntitySet Name="Domains" EntityType="SpecToolModel.Store.Domains" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Variables" EntityType="SpecToolModel.Store.Variables" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MetaDataVersions" EntityType="SpecToolModel.Store.MetaDataVersions" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ComponentStudy" Association="SpecToolModel.Store.ComponentStudy">
-      <End Role="Component" EntitySet="Components" />
+      <End Role="Component" EntitySet="Compounds" />
       <End Role="Study" EntitySet="Studies" />
     </AssociationSet>
     <AssociationSet Name="CodeListCodeListValues" Association="SpecToolModel.Store.CodeListCodeListValues">
       <End Role="CodeList" EntitySet="CodeLists" />
       <End Role="CodeListValues" EntitySet="CodeListValues" />
     </AssociationSet>
-    <AssociationSet Name="DomainDomainVariable" Association="SpecToolModel.Store.DomainDomainVariable">
-      <End Role="Domain" EntitySet="Domains" />
-      <End Role="DomainVariable" EntitySet="DomainVariables" />
-    </AssociationSet>
-    <AssociationSet Name="VariableDomainVariable" Association="SpecToolModel.Store.VariableDomainVariable">
-      <End Role="Variable" EntitySet="Variables" />
-      <End Role="DomainVariable" EntitySet="DomainVariables" />
-    </AssociationSet>
-    <AssociationSet Name="MDRStandardDomain" Association="SpecToolModel.Store.MDRStandardDomain">
-      <End Role="MDR" EntitySet="MDRs" />
-      <End Role="StandardDomain" EntitySet="Domains_StandardDomain" />
-    </AssociationSet>
-    <AssociationSet Name="MDRStandardVariable" Association="SpecToolModel.Store.MDRStandardVariable">
-      <End Role="MDR" EntitySet="MDRs" />
-      <End Role="StandardVariable" EntitySet="Variables_StandardVariable" />
-    </AssociationSet>
-    <AssociationSet Name="MDRStandardCodeList" Association="SpecToolModel.Store.MDRStandardCodeList">
-      <End Role="MDR" EntitySet="MDRs" />
-      <End Role="StandardCodeList" EntitySet="CodeLists_StandardCodeList" />
-    </AssociationSet>
-    <AssociationSet Name="SpecificationSpecDomain" Association="SpecToolModel.Store.SpecificationSpecDomain">
-      <End Role="Specification" EntitySet="Specifications" />
-      <End Role="SpecDomain" EntitySet="SpecDomains" />
-    </AssociationSet>
-    <AssociationSet Name="DomainVariableSpecDomainVariable" Association="SpecToolModel.Store.DomainVariableSpecDomainVariable">
-      <End Role="DomainVariable" EntitySet="DomainVariables" />
-      <End Role="SpecDomainVariable" EntitySet="SpecDomainVariables" />
-    </AssociationSet>
-    <AssociationSet Name="SpecificationSpecDomainVariable" Association="SpecToolModel.Store.SpecificationSpecDomainVariable">
-      <End Role="Specification" EntitySet="Specifications" />
-      <End Role="SpecDomainVariable" EntitySet="SpecDomainVariables" />
-    </AssociationSet>
-    <AssociationSet Name="CodeListValuesSpecCodeListValues" Association="SpecToolModel.Store.CodeListValuesSpecCodeListValues">
-      <End Role="CodeListValues" EntitySet="CodeListValues" />
-      <End Role="SpecCodeListValues" EntitySet="SpecCodeListValues" />
-    </AssociationSet>
-    <AssociationSet Name="SpecificationSpecCodeListValues" Association="SpecToolModel.Store.SpecificationSpecCodeListValues">
-      <End Role="Specification" EntitySet="Specifications" />
-      <End Role="SpecCodeListValues" EntitySet="SpecCodeListValues" />
-    </AssociationSet>
-    <AssociationSet Name="DomainSpecDomain" Association="SpecToolModel.Store.DomainSpecDomain">
-      <End Role="Domain" EntitySet="Domains" />
-      <End Role="SpecDomain" EntitySet="SpecDomains" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StandardDomain_inherits_Domain" Association="SpecToolModel.Store.FK_StandardDomain_inherits_Domain">
-      <End Role="Domain" EntitySet="Domains" />
-      <End Role="StandardDomain" EntitySet="Domains_StandardDomain" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StandardVariable_inherits_Variable" Association="SpecToolModel.Store.FK_StandardVariable_inherits_Variable">
-      <End Role="Variable" EntitySet="Variables" />
-      <End Role="StandardVariable" EntitySet="Variables_StandardVariable" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StandardCodeList_inherits_CodeList" Association="SpecToolModel.Store.FK_StandardCodeList_inherits_CodeList">
+    <AssociationSet Name="CodeListVariable" Association="SpecToolModel.Store.CodeListVariable">
       <End Role="CodeList" EntitySet="CodeLists" />
-      <End Role="StandardCodeList" EntitySet="CodeLists_StandardCodeList" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CustomDomain_inherits_Domain" Association="SpecToolModel.Store.FK_CustomDomain_inherits_Domain">
-      <End Role="Domain" EntitySet="Domains" />
-      <End Role="CustomDomain" EntitySet="Domains_CustomDomain" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CustomVariable_inherits_Variable" Association="SpecToolModel.Store.FK_CustomVariable_inherits_Variable">
       <End Role="Variable" EntitySet="Variables" />
-      <End Role="CustomVariable" EntitySet="Variables_CustomVariable" />
     </AssociationSet>
-    <AssociationSet Name="FK_CustomCodeList_inherits_CodeList" Association="SpecToolModel.Store.FK_CustomCodeList_inherits_CodeList">
+    <AssociationSet Name="DomainVariable" Association="SpecToolModel.Store.DomainVariable">
+      <End Role="Domain" EntitySet="Domains" />
+      <End Role="Variable" EntitySet="Variables" />
+    </AssociationSet>
+    <AssociationSet Name="StudyDomain" Association="SpecToolModel.Store.StudyDomain">
+      <End Role="Study" EntitySet="Studies" />
+      <End Role="Domain" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="SourceDomainDomainRelation" Association="SpecToolModel.Store.SourceDomainDomainRelation">
+      <End Role="Domain" EntitySet="Domains" />
+      <End Role="Domain1" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="VariableVariable" Association="SpecToolModel.Store.VariableVariable">
+      <End Role="Variable" EntitySet="Variables" />
+      <End Role="Variable1" EntitySet="Variables" />
+    </AssociationSet>
+    <AssociationSet Name="CodeListCodeList" Association="SpecToolModel.Store.CodeListCodeList">
       <End Role="CodeList" EntitySet="CodeLists" />
-      <End Role="CustomCodeList" EntitySet="CodeLists_CustomCodeList" />
+      <End Role="CodeList1" EntitySet="CodeLists" />
+    </AssociationSet>
+    <AssociationSet Name="MetaDataVersionDomain" Association="SpecToolModel.Store.MetaDataVersionDomain">
+      <End Role="MetaDataVersion" EntitySet="MetaDataVersions" />
+      <End Role="Domain" EntitySet="Domains" />
+    </AssociationSet>
+    <AssociationSet Name="MetaDataVersionCodeList" Association="SpecToolModel.Store.MetaDataVersionCodeList">
+      <End Role="MetaDataVersion" EntitySet="MetaDataVersions" />
+      <End Role="CodeList" EntitySet="CodeLists" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="MDRs">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Version" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Specifications">
+  <EntityType Name="Compounds">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="StudyId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Components">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Domains">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Classification" Type="int" Nullable="false" />
-    <Property Name="Purpose" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Variables">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DomainVariablePattern" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Studies">
     <Key>
@@ -155,22 +69,20 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ComponentId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="DomainVariables">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Required" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="HasCodeList" Type="bit" Nullable="false" />
-    <Property Name="DomainId" Type="int" Nullable="false" />
-    <Property Name="VariableId" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="CodeLists">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="VariableId" Type="int" Nullable="true" />
+    <Property Name="DefinitionText" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DataType" Type="int" Nullable="false" />
+    <Property Name="IsStandard" Type="bit" Nullable="false" />
+    <Property Name="IsTemplate" Type="bit" Nullable="false" />
+    <Property Name="CodeListId" Type="int" Nullable="true" />
+    <Property Name="MetaDataVersionId" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="CodeListValues">
     <Key>
@@ -181,87 +93,54 @@
     <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CodeListId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="SpecDomains">
+  <EntityType Name="Domains">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SpecificationId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Class" Type="int" Nullable="false" />
+    <Property Name="StructureDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CommentText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsStandard" Type="bit" Nullable="false" />
+    <Property Name="IsTemplate" Type="bit" Nullable="false" />
+    <Property Name="StudyId" Type="int" Nullable="true" />
+    <Property Name="DomainId" Type="int" Nullable="true" />
+    <Property Name="MetaDataVersionId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Variables">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BaseName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LableText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Core" Type="int" Nullable="false" />
+    <Property Name="Origin" Type="int" Nullable="false" />
+    <Property Name="Mandatory" Type="int" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+    <Property Name="CodeListId" Type="int" Nullable="true" />
+    <Property Name="CommentText" Type="nvarchar(max)" Nullable="true" />
     <Property Name="DomainId" Type="int" Nullable="false" />
+    <Property Name="IsStandard" Type="bit" Nullable="false" />
+    <Property Name="IsTemplate" Type="bit" Nullable="false" />
+    <Property Name="VariableId" Type="int" Nullable="true" />
+    <Property Name="Length" Type="int" Nullable="false" />
+    <Property Name="SignificantDigits" Type="int" Nullable="true" />
+    <Property Name="DataType" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="SpecDomainVariables">
+  <EntityType Name="MetaDataVersions">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DomainVariableId" Type="int" Nullable="false" />
-    <Property Name="SpecificationId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Version" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="SpecCodeListValues">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CodeListValuesId" Type="int" Nullable="false" />
-    <Property Name="SpecificationId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Domains_StandardDomain">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="MDRId" Type="int" Nullable="false" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Variables_StandardVariable">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="MDRId" Type="int" Nullable="false" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="CodeLists_StandardCodeList">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="MDRId" Type="int" Nullable="false" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Domains_CustomDomain">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Reference" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Variables_CustomVariable">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Reference" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="CodeLists_CustomCodeList">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="StudySpecification">
-    <End Role="Study" Type="SpecToolModel.Store.Studies" Multiplicity="1" />
-    <End Role="Specification" Type="SpecToolModel.Store.Specifications" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Study">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Specification">
-        <PropertyRef Name="StudyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="ComponentStudy">
-    <End Role="Component" Type="SpecToolModel.Store.Components" Multiplicity="1" />
+    <End Role="Component" Type="SpecToolModel.Store.Compounds" Multiplicity="1" />
     <End Role="Study" Type="SpecToolModel.Store.Studies" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Component">
@@ -284,219 +163,99 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="DomainDomainVariable">
+  <Association Name="CodeListVariable">
+    <End Role="CodeList" Type="SpecToolModel.Store.CodeLists" Multiplicity="0..1" />
+    <End Role="Variable" Type="SpecToolModel.Store.Variables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CodeList">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Variable">
+        <PropertyRef Name="CodeListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DomainVariable">
     <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="1" />
-    <End Role="DomainVariable" Type="SpecToolModel.Store.DomainVariables" Multiplicity="*" />
+    <End Role="Variable" Type="SpecToolModel.Store.Variables" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Domain">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="DomainVariable">
+      <Dependent Role="Variable">
         <PropertyRef Name="DomainId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="VariableDomainVariable">
-    <End Role="Variable" Type="SpecToolModel.Store.Variables" Multiplicity="1" />
-    <End Role="DomainVariable" Type="SpecToolModel.Store.DomainVariables" Multiplicity="*" />
+  <Association Name="StudyDomain">
+    <End Role="Study" Type="SpecToolModel.Store.Studies" Multiplicity="0..1" />
+    <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Study">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Domain">
+        <PropertyRef Name="StudyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SourceDomainDomainRelation">
+    <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="0..1" />
+    <End Role="Domain1" Type="SpecToolModel.Store.Domains" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Domain1">
+        <PropertyRef Name="DomainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="VariableVariable">
+    <End Role="Variable" Type="SpecToolModel.Store.Variables" Multiplicity="0..1" />
+    <End Role="Variable1" Type="SpecToolModel.Store.Variables" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Variable">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="DomainVariable">
+      <Dependent Role="Variable1">
         <PropertyRef Name="VariableId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="MDRStandardDomain">
-    <End Role="MDR" Type="SpecToolModel.Store.MDRs" Multiplicity="1" />
-    <End Role="StandardDomain" Type="SpecToolModel.Store.Domains_StandardDomain" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MDR">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StandardDomain">
-        <PropertyRef Name="MDRId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="MDRStandardVariable">
-    <End Role="MDR" Type="SpecToolModel.Store.MDRs" Multiplicity="1" />
-    <End Role="StandardVariable" Type="SpecToolModel.Store.Variables_StandardVariable" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MDR">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StandardVariable">
-        <PropertyRef Name="MDRId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="MDRStandardCodeList">
-    <End Role="MDR" Type="SpecToolModel.Store.MDRs" Multiplicity="1" />
-    <End Role="StandardCodeList" Type="SpecToolModel.Store.CodeLists_StandardCodeList" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MDR">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StandardCodeList">
-        <PropertyRef Name="MDRId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SpecificationSpecDomain">
-    <End Role="Specification" Type="SpecToolModel.Store.Specifications" Multiplicity="1" />
-    <End Role="SpecDomain" Type="SpecToolModel.Store.SpecDomains" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specification">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SpecDomain">
-        <PropertyRef Name="SpecificationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="DomainVariableSpecDomainVariable">
-    <End Role="DomainVariable" Type="SpecToolModel.Store.DomainVariables" Multiplicity="1" />
-    <End Role="SpecDomainVariable" Type="SpecToolModel.Store.SpecDomainVariables" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DomainVariable">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SpecDomainVariable">
-        <PropertyRef Name="DomainVariableId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SpecificationSpecDomainVariable">
-    <End Role="Specification" Type="SpecToolModel.Store.Specifications" Multiplicity="1" />
-    <End Role="SpecDomainVariable" Type="SpecToolModel.Store.SpecDomainVariables" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specification">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SpecDomainVariable">
-        <PropertyRef Name="SpecificationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CodeListValuesSpecCodeListValues">
-    <End Role="CodeListValues" Type="SpecToolModel.Store.CodeListValues" Multiplicity="1" />
-    <End Role="SpecCodeListValues" Type="SpecToolModel.Store.SpecCodeListValues" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CodeListValues">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SpecCodeListValues">
-        <PropertyRef Name="CodeListValuesId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SpecificationSpecCodeListValues">
-    <End Role="Specification" Type="SpecToolModel.Store.Specifications" Multiplicity="1" />
-    <End Role="SpecCodeListValues" Type="SpecToolModel.Store.SpecCodeListValues" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specification">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SpecCodeListValues">
-        <PropertyRef Name="SpecificationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="DomainSpecDomain">
-    <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="1" />
-    <End Role="SpecDomain" Type="SpecToolModel.Store.SpecDomains" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Domain">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SpecDomain">
-        <PropertyRef Name="DomainId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StandardDomain_inherits_Domain">
-    <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="StandardDomain" Type="SpecToolModel.Store.Domains_StandardDomain" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Domain">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StandardDomain">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StandardVariable_inherits_Variable">
-    <End Role="Variable" Type="SpecToolModel.Store.Variables" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="StandardVariable" Type="SpecToolModel.Store.Variables_StandardVariable" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Variable">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StandardVariable">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StandardCodeList_inherits_CodeList">
-    <End Role="CodeList" Type="SpecToolModel.Store.CodeLists" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="StandardCodeList" Type="SpecToolModel.Store.CodeLists_StandardCodeList" Multiplicity="0..1" />
+  <Association Name="CodeListCodeList">
+    <End Role="CodeList" Type="SpecToolModel.Store.CodeLists" Multiplicity="0..1" />
+    <End Role="CodeList1" Type="SpecToolModel.Store.CodeLists" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CodeList">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="StandardCodeList">
-        <PropertyRef Name="Id" />
+      <Dependent Role="CodeList1">
+        <PropertyRef Name="CodeListId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CustomDomain_inherits_Domain">
-    <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CustomDomain" Type="SpecToolModel.Store.Domains_CustomDomain" Multiplicity="0..1" />
+  <Association Name="MetaDataVersionDomain">
+    <End Role="MetaDataVersion" Type="SpecToolModel.Store.MetaDataVersions" Multiplicity="0..1" />
+    <End Role="Domain" Type="SpecToolModel.Store.Domains" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Domain">
+      <Principal Role="MetaDataVersion">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="CustomDomain">
-        <PropertyRef Name="Id" />
+      <Dependent Role="Domain">
+        <PropertyRef Name="MetaDataVersionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CustomVariable_inherits_Variable">
-    <End Role="Variable" Type="SpecToolModel.Store.Variables" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CustomVariable" Type="SpecToolModel.Store.Variables_CustomVariable" Multiplicity="0..1" />
+  <Association Name="MetaDataVersionCodeList">
+    <End Role="MetaDataVersion" Type="SpecToolModel.Store.MetaDataVersions" Multiplicity="0..1" />
+    <End Role="CodeList" Type="SpecToolModel.Store.CodeLists" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Variable">
+      <Principal Role="MetaDataVersion">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="CustomVariable">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CustomCodeList_inherits_CodeList">
-    <End Role="CodeList" Type="SpecToolModel.Store.CodeLists" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CustomCodeList" Type="SpecToolModel.Store.CodeLists_CustomCodeList" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="CodeList">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CustomCodeList">
-        <PropertyRef Name="Id" />
+      <Dependent Role="CodeList">
+        <PropertyRef Name="MetaDataVersionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -505,121 +264,55 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SpecToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="SpecToolModelContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="MDRs" EntityType="SpecToolModel.MDR" />
-          <EntitySet Name="Specifications" EntityType="SpecToolModel.Specification" />
-          <EntitySet Name="Components" EntityType="SpecToolModel.Component" />
-          <EntitySet Name="Domains" EntityType="SpecToolModel.Domain" />
-          <EntitySet Name="Variables" EntityType="SpecToolModel.Variable" />
+          <EntitySet Name="Compounds" EntityType="SpecToolModel.Compound" />
           <EntitySet Name="Studies" EntityType="SpecToolModel.Study" />
-          <AssociationSet Name="StudySpecification" Association="SpecToolModel.StudySpecification">
-            <End Role="Study" EntitySet="Studies" />
-            <End Role="Specification" EntitySet="Specifications" />
-          </AssociationSet>
           <AssociationSet Name="ComponentStudy" Association="SpecToolModel.ComponentStudy">
-            <End Role="Component" EntitySet="Components" />
+            <End Role="Component" EntitySet="Compounds" />
             <End Role="Study" EntitySet="Studies" />
           </AssociationSet>
-          <EntitySet Name="DomainVariables" EntityType="SpecToolModel.DomainVariable" />
           <EntitySet Name="CodeLists" EntityType="SpecToolModel.CodeList" />
           <EntitySet Name="CodeListValues" EntityType="SpecToolModel.CodeListValues" />
           <AssociationSet Name="CodeListCodeListValues" Association="SpecToolModel.CodeListCodeListValues">
             <End Role="CodeList" EntitySet="CodeLists" />
             <End Role="CodeListValues" EntitySet="CodeListValues" />
           </AssociationSet>
-          <AssociationSet Name="DomainDomainVariable" Association="SpecToolModel.DomainDomainVariable">
-            <End Role="Domain" EntitySet="Domains" />
-            <End Role="DomainVariable" EntitySet="DomainVariables" />
-          </AssociationSet>
-          <AssociationSet Name="VariableDomainVariable" Association="SpecToolModel.VariableDomainVariable">
+          <EntitySet Name="Domains" EntityType="SpecToolModel.Domain" />
+          <EntitySet Name="Variables" EntityType="SpecToolModel.Variable" />
+          <AssociationSet Name="CodeListVariable" Association="SpecToolModel.CodeListVariable">
+            <End Role="CodeList" EntitySet="CodeLists" />
             <End Role="Variable" EntitySet="Variables" />
-            <End Role="DomainVariable" EntitySet="DomainVariables" />
           </AssociationSet>
-          <AssociationSet Name="MDRStandardDomain" Association="SpecToolModel.MDRStandardDomain">
-            <End Role="MDR" EntitySet="MDRs" />
-            <End Role="StandardDomain" EntitySet="Domains" />
-          </AssociationSet>
-          <AssociationSet Name="MDRStandardVariable" Association="SpecToolModel.MDRStandardVariable">
-            <End Role="MDR" EntitySet="MDRs" />
-            <End Role="StandardVariable" EntitySet="Variables" />
-          </AssociationSet>
-          <AssociationSet Name="MDRStandardCodeList" Association="SpecToolModel.MDRStandardCodeList">
-            <End Role="MDR" EntitySet="MDRs" />
-            <End Role="StandardCodeList" EntitySet="CodeLists" />
-          </AssociationSet>
-          <EntitySet Name="SpecDomains" EntityType="SpecToolModel.SpecDomain" />
-          <AssociationSet Name="SpecificationSpecDomain" Association="SpecToolModel.SpecificationSpecDomain">
-            <End Role="Specification" EntitySet="Specifications" />
-            <End Role="SpecDomain" EntitySet="SpecDomains" />
-          </AssociationSet>
-          <EntitySet Name="SpecDomainVariables" EntityType="SpecToolModel.SpecDomainVariable" />
-          <AssociationSet Name="DomainVariableSpecDomainVariable" Association="SpecToolModel.DomainVariableSpecDomainVariable">
-            <End Role="DomainVariable" EntitySet="DomainVariables" />
-            <End Role="SpecDomainVariable" EntitySet="SpecDomainVariables" />
-          </AssociationSet>
-          <AssociationSet Name="SpecificationSpecDomainVariable" Association="SpecToolModel.SpecificationSpecDomainVariable">
-            <End Role="Specification" EntitySet="Specifications" />
-            <End Role="SpecDomainVariable" EntitySet="SpecDomainVariables" />
-          </AssociationSet>
-          <EntitySet Name="SpecCodeListValues" EntityType="SpecToolModel.SpecCodeListValues" />
-          <AssociationSet Name="CodeListValuesSpecCodeListValues" Association="SpecToolModel.CodeListValuesSpecCodeListValues">
-            <End Role="CodeListValues" EntitySet="CodeListValues" />
-            <End Role="SpecCodeListValues" EntitySet="SpecCodeListValues" />
-          </AssociationSet>
-          <AssociationSet Name="SpecificationSpecCodeListValues" Association="SpecToolModel.SpecificationSpecCodeListValues">
-            <End Role="Specification" EntitySet="Specifications" />
-            <End Role="SpecCodeListValues" EntitySet="SpecCodeListValues" />
-          </AssociationSet>
-          <AssociationSet Name="DomainSpecDomain" Association="SpecToolModel.DomainSpecDomain">
+          <AssociationSet Name="DomainVariable" Association="SpecToolModel.DomainVariable">
             <End Role="Domain" EntitySet="Domains" />
-            <End Role="SpecDomain" EntitySet="SpecDomains" />
+            <End Role="Variable" EntitySet="Variables" />
+          </AssociationSet>
+          <AssociationSet Name="StudyDomain" Association="SpecToolModel.StudyDomain">
+            <End Role="Study" EntitySet="Studies" />
+            <End Role="Domain" EntitySet="Domains" />
+          </AssociationSet>
+          <AssociationSet Name="SourceDomainDomainRelation" Association="SpecToolModel.SourceDomainDomainRelation">
+            <End Role="Domain" EntitySet="Domains" />
+            <End Role="Domain1" EntitySet="Domains" />
+          </AssociationSet>
+          <AssociationSet Name="VariableVariable" Association="SpecToolModel.VariableVariable">
+            <End Role="Variable" EntitySet="Variables" />
+            <End Role="Variable1" EntitySet="Variables" />
+          </AssociationSet>
+          <AssociationSet Name="CodeListCodeList" Association="SpecToolModel.CodeListCodeList">
+            <End Role="CodeList" EntitySet="CodeLists" />
+            <End Role="CodeList1" EntitySet="CodeLists" />
+          </AssociationSet>
+          <EntitySet Name="MetaDataVersions" EntityType="SpecToolModel.MetaDataVersion" />
+          <AssociationSet Name="MetaDataVersionDomain" Association="SpecToolModel.MetaDataVersionDomain">
+            <End Role="MetaDataVersion" EntitySet="MetaDataVersions" />
+            <End Role="Domain" EntitySet="Domains" />
+          </AssociationSet>
+          <AssociationSet Name="MetaDataVersionCodeList" Association="SpecToolModel.MetaDataVersionCodeList">
+            <End Role="MetaDataVersion" EntitySet="MetaDataVersions" />
+            <End Role="CodeList" EntitySet="CodeLists" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Domain" Abstract="true">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="SpecToolModel.Domaintype" Name="Classification" Nullable="false" />
-          <Property Type="SpecToolModel.Purpose" Name="Purpose" Nullable="false" />
-          <NavigationProperty Name="DomainVariables" Relationship="SpecToolModel.DomainDomainVariable" FromRole="Domain" ToRole="DomainVariable" />
-          <NavigationProperty Name="SpecDomains" Relationship="SpecToolModel.DomainSpecDomain" FromRole="Domain" ToRole="SpecDomain" />
-        </EntityType>
-        <EntityType Name="Variable" Abstract="true">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="String" Name="DomainVariablePattern" Nullable="false" />
-          <NavigationProperty Name="DomainVariables" Relationship="SpecToolModel.VariableDomainVariable" FromRole="Variable" ToRole="DomainVariable" />
-        </EntityType>
-        <EntityType Name="MDR">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Version" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="StandardDomains" Relationship="SpecToolModel.MDRStandardDomain" FromRole="MDR" ToRole="StandardDomain" />
-          <NavigationProperty Name="StandardVariables" Relationship="SpecToolModel.MDRStandardVariable" FromRole="MDR" ToRole="StandardVariable" />
-          <NavigationProperty Name="StandardCodeLists" Relationship="SpecToolModel.MDRStandardCodeList" FromRole="MDR" ToRole="StandardCodeList" />
-        </EntityType>
-        <EntityType Name="Specification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <NavigationProperty Name="Study" Relationship="SpecToolModel.StudySpecification" FromRole="Specification" ToRole="Study" />
-          <Property Type="Int32" Name="StudyId" Nullable="false" />
-          <NavigationProperty Name="SpecDomains" Relationship="SpecToolModel.SpecificationSpecDomain" FromRole="Specification" ToRole="SpecDomain" />
-          <NavigationProperty Name="SpecDomainVariables" Relationship="SpecToolModel.SpecificationSpecDomainVariable" FromRole="Specification" ToRole="SpecDomainVariable" />
-          <NavigationProperty Name="SpecCodeListValues" Relationship="SpecToolModel.SpecificationSpecCodeListValues" FromRole="Specification" ToRole="SpecCodeListValues" />
-        </EntityType>
-        <EntityType Name="Component">
+        <EntityType Name="Compound">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -627,14 +320,11 @@
           <Property Type="String" Name="Name" Nullable="false" />
           <NavigationProperty Name="Studies" Relationship="SpecToolModel.ComponentStudy" FromRole="Component" ToRole="Study" />
         </EntityType>
-        <EnumType Name="Domaintype">
-          <Member Name="EVENTS" />
-          <Member Name="INTERVENSIONS" />
-          <Member Name="FINDINGS" />
-          <Member Name="SPECIAL_PURPOSE_DOMAINS" />
-        </EnumType>
-        <EnumType Name="Purpose">
-        <Member Name="TABULATION" />
+        <EnumType Name="DomainClass">
+          <Member Name="EVENTS" Value="1" />
+          <Member Name="INTERVENSIONS" Value="2" />
+          <Member Name="FINDINGS" Value="3" />
+          <Member Name="SPECIAL_PURPOSE_DOMAINS" Value="4" />
         </EnumType>
         <EntityType Name="Study">
           <Key>
@@ -642,54 +332,41 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="Specifications" Relationship="SpecToolModel.StudySpecification" FromRole="Study" ToRole="Specification" />
-          <NavigationProperty Name="Component" Relationship="SpecToolModel.ComponentStudy" FromRole="Study" ToRole="Component" />
-          <Property Type="Int32" Name="ComponentId" Nullable="false" />
+          <NavigationProperty Name="Compound" Relationship="SpecToolModel.ComponentStudy" FromRole="Study" ToRole="Component" />
+          <Property Type="Int32" Name="CompoundId" Nullable="false" />
+          <NavigationProperty Name="Domains" Relationship="SpecToolModel.StudyDomain" FromRole="Study" ToRole="Domain" />
         </EntityType>
-        <Association Name="StudySpecification">
-          <End Type="SpecToolModel.Study" Role="Study" Multiplicity="1" />
-          <End Type="SpecToolModel.Specification" Role="Specification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Study">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Specification">
-              <PropertyRef Name="StudyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ComponentStudy">
-          <End Type="SpecToolModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="SpecToolModel.Compound" Role="Component" Multiplicity="1" />
           <End Type="SpecToolModel.Study" Role="Study" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Component">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Study">
-              <PropertyRef Name="ComponentId" />
+              <PropertyRef Name="CompoundId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DomainVariable" Abstract="false">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Required" Nullable="false" />
-          <Property Type="Boolean" Name="HasCodeList" Nullable="false" />
-          <NavigationProperty Name="Domain" Relationship="SpecToolModel.DomainDomainVariable" FromRole="DomainVariable" ToRole="Domain" />
-          <Property Type="Int32" Name="DomainId" Nullable="false" />
-          <NavigationProperty Name="Variable" Relationship="SpecToolModel.VariableDomainVariable" FromRole="DomainVariable" ToRole="Variable" />
-          <Property Type="Int32" Name="VariableId" Nullable="false" />
-          <NavigationProperty Name="SpecDomainVariables" Relationship="SpecToolModel.DomainVariableSpecDomainVariable" FromRole="DomainVariable" ToRole="SpecDomainVariable" />
-        </EntityType>
-        <EntityType Name="CodeList" Abstract="true">
+        <EntityType Name="CodeList" Abstract="false">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
           <NavigationProperty Name="CodeListValues" Relationship="SpecToolModel.CodeListCodeListValues" FromRole="CodeList" ToRole="CodeListValues" />
+          <Property Type="Int32" Name="VariableId" Nullable="true" />
+          <NavigationProperty Name="Variables" Relationship="SpecToolModel.CodeListVariable" FromRole="CodeList" ToRole="Variable" />
+          <Property Type="String" Name="DefinitionText" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="SpecToolModel.VariableDataType" Name="DataType" Nullable="false" />
+          <Property Type="Boolean" Name="IsStandard" Nullable="false" />
+          <Property Type="Boolean" Name="IsTemplate" Nullable="false" />
+          <NavigationProperty Name="DerivedCodeLists" Relationship="SpecToolModel.CodeListCodeList" FromRole="CodeList" ToRole="CodeList1" />
+          <NavigationProperty Name="SourceCodeList" Relationship="SpecToolModel.CodeListCodeList" FromRole="CodeList1" ToRole="CodeList" />
+          <Property Type="Int32" Name="CodeListId" Nullable="true" />
+          <NavigationProperty Name="MetaDataVersion" Relationship="SpecToolModel.MetaDataVersionCodeList" FromRole="CodeList" ToRole="MetaDataVersion" />
+          <Property Type="Int32" Name="MetaDataVersionId" Nullable="true" />
         </EntityType>
         <EntityType Name="CodeListValues" Abstract="false">
           <Key>
@@ -700,7 +377,6 @@
           <Property Type="String" Name="Value" Nullable="false" />
           <NavigationProperty Name="CodeList" Relationship="SpecToolModel.CodeListCodeListValues" FromRole="CodeListValues" ToRole="CodeList" />
           <Property Type="Int32" Name="CodeListId" Nullable="false" />
-          <NavigationProperty Name="SpecCodeListValues" Relationship="SpecToolModel.CodeListValuesSpecCodeListValues" FromRole="CodeListValues" ToRole="SpecCodeListValues" />
         </EntityType>
         <Association Name="CodeListCodeListValues">
           <End Type="SpecToolModel.CodeList" Role="CodeList" Multiplicity="1" />
@@ -714,266 +390,199 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="DomainDomainVariable">
+        <EntityType Name="Domain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="SpecToolModel.DomainClass" Name="Class" Nullable="false" />
+          <Property Type="String" Name="StructureDescription" Nullable="false" />
+          <Property Type="String" Name="CommentText" Nullable="false" />
+          <NavigationProperty Name="Variables" Relationship="SpecToolModel.DomainVariable" FromRole="Domain" ToRole="Variable" />
+          <Property Type="Boolean" Name="IsStandard" Nullable="false" />
+          <Property Type="Boolean" Name="IsTemplate" Nullable="false" />
+          <NavigationProperty Name="Study" Relationship="SpecToolModel.StudyDomain" FromRole="Domain" ToRole="Study" />
+          <Property Type="Int32" Name="StudyId" Nullable="true" />
+          <NavigationProperty Name="DerivedDomains" Relationship="SpecToolModel.SourceDomainDomainRelation" FromRole="Domain" ToRole="Domain1" />
+          <NavigationProperty Name="SourceDomain" Relationship="SpecToolModel.SourceDomainDomainRelation" FromRole="Domain1" ToRole="Domain" />
+          <Property Type="Int32" Name="DomainId" Nullable="true" />
+          <NavigationProperty Name="MetaDataVersion" Relationship="SpecToolModel.MetaDataVersionDomain" FromRole="Domain" ToRole="MetaDataVersion" />
+          <Property Type="Int32" Name="MetaDataVersionId" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Variable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="BaseName" Nullable="false" />
+          <Property Type="String" Name="LableText" Nullable="false" />
+          <Property Type="SpecToolModel.VariableCore" Name="Core" Nullable="false" />
+          <Property Type="SpecToolModel.VariableOrgin" Name="Origin" Nullable="false" />
+          <Property Type="SpecToolModel.VaraibleMandatory" Name="Mandatory" Nullable="false" />
+          <Property Type="SpecToolModel.VariableRole" Name="Role" Nullable="false" />
+          <NavigationProperty Name="CodeList" Relationship="SpecToolModel.CodeListVariable" FromRole="Variable" ToRole="CodeList" />
+          <Property Type="Int32" Name="CodeListId" Nullable="true" />
+          <Property Type="String" Name="CommentText" annotation:StoreGeneratedPattern="None" Nullable="true" />
+          <NavigationProperty Name="Domain" Relationship="SpecToolModel.DomainVariable" FromRole="Variable" ToRole="Domain" />
+          <Property Type="Int32" Name="DomainId" Nullable="false" />
+          <Property Type="Boolean" Name="IsStandard" Nullable="false" />
+          <Property Type="Boolean" Name="IsTemplate" Nullable="false" />
+          <NavigationProperty Name="DerivedVariables" Relationship="SpecToolModel.VariableVariable" FromRole="Variable" ToRole="Variable1" />
+          <NavigationProperty Name="SourceVariable" Relationship="SpecToolModel.VariableVariable" FromRole="Variable1" ToRole="Variable" />
+          <Property Type="Int32" Name="VariableId" Nullable="true" />
+          <Property Type="Int32" Name="Length" Nullable="false" />
+          <Property Type="Int32" Name="SignificantDigits" Nullable="true" />
+          <Property Type="SpecToolModel.VariableDataType" Name="DataType" Nullable="false" />
+        </EntityType>
+        <EnumType Name="VariableDataType">
+          <Member Name="text" Value="1" />
+          <Member Name="float" Value="2" />
+        </EnumType>
+        <EnumType Name="VariableCore" >
+          <Member Name="Req" Value="1" />
+          <Member Name="Perm" Value="2" />
+          <Member Name="Exp" Value="3" />
+        </EnumType>
+        <EnumType Name="VariableOrgin">
+          <Member Name="Assigned" Value="1" />
+          <Member Name="CRF" Value="2" />
+          <Member Name="Derived" Value="3" />
+          <Member Name="eDT" Value="4" />
+          <Member Name="Protocol" Value="5" />
+        </EnumType>
+        <EnumType Name="VaraibleMandatory" >
+          <Member Name="Yes" Value="1" />
+          <Member Name="No" Value="1" />
+        </EnumType>
+        <EnumType Name="VariableRole">
+          <Member Name="Identifier" Value="1" />
+          <Member Name="Record_Qualifier" Value="2" />
+          <Member Name="Result_Qualifier" Value="3" />
+          <Member Name="Synonym_Qualifier" Value="4" />
+          <Member Name="Timing" Value="5" />
+          <Member Name="Topic" Value="6" />
+          <Member Name="Variable_Qualifier" Value="7" />
+        </EnumType>
+        <Association Name="CodeListVariable">
+          <End Type="SpecToolModel.CodeList" Role="CodeList" Multiplicity="0..1" />
+          <End Type="SpecToolModel.Variable" Role="Variable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Variable">
+              <PropertyRef Name="CodeListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DomainVariable">
           <End Type="SpecToolModel.Domain" Role="Domain" Multiplicity="1" />
-          <End Type="SpecToolModel.DomainVariable" Role="DomainVariable" Multiplicity="*" />
+          <End Type="SpecToolModel.Variable" Role="Variable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Domain">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="DomainVariable">
+            <Dependent Role="Variable">
               <PropertyRef Name="DomainId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="VariableDomainVariable">
-          <End Type="SpecToolModel.Variable" Role="Variable" Multiplicity="1" />
-          <End Type="SpecToolModel.DomainVariable" Role="DomainVariable" Multiplicity="*" />
+        <Association Name="StudyDomain">
+          <End Type="SpecToolModel.Study" Role="Study" Multiplicity="0..1" />
+          <End Type="SpecToolModel.Domain" Role="Domain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Study">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Domain">
+              <PropertyRef Name="StudyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SourceDomainDomainRelation">
+          <End Type="SpecToolModel.Domain" Role="Domain" Multiplicity="0..1" />
+          <End Type="SpecToolModel.Domain" Role="Domain1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Domain">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Domain1">
+              <PropertyRef Name="DomainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VariableVariable">
+          <End Type="SpecToolModel.Variable" Role="Variable" Multiplicity="0..1" />
+          <End Type="SpecToolModel.Variable" Role="Variable1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Variable">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="DomainVariable">
+            <Dependent Role="Variable1">
               <PropertyRef Name="VariableId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="StandardDomain" BaseType="SpecToolModel.Domain">
-          <NavigationProperty Name="MDR" Relationship="SpecToolModel.MDRStandardDomain" FromRole="StandardDomain" ToRole="MDR" />
-          <Property Type="Int32" Name="MDRId" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StandardVariable" BaseType="SpecToolModel.Variable">
-          <NavigationProperty Name="MDR" Relationship="SpecToolModel.MDRStandardVariable" FromRole="StandardVariable" ToRole="MDR" />
-          <Property Type="Int32" Name="MDRId" Nullable="false" />
-        </EntityType>
-        <Association Name="MDRStandardDomain">
-          <End Type="SpecToolModel.MDR" Role="MDR" Multiplicity="1" />
-          <End Type="SpecToolModel.StandardDomain" Role="StandardDomain" Multiplicity="*" />
+        <Association Name="CodeListCodeList">
+          <End Type="SpecToolModel.CodeList" Role="CodeList" Multiplicity="0..1" />
+          <End Type="SpecToolModel.CodeList" Role="CodeList1" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MDR">
+            <Principal Role="CodeList">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StandardDomain">
-              <PropertyRef Name="MDRId" />
+            <Dependent Role="CodeList1">
+              <PropertyRef Name="CodeListId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="MDRStandardVariable">
-          <End Type="SpecToolModel.MDR" Role="MDR" Multiplicity="1" />
-          <End Type="SpecToolModel.StandardVariable" Role="StandardVariable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MDR">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StandardVariable">
-              <PropertyRef Name="MDRId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CustomDomain" BaseType="SpecToolModel.Domain">
-          <Property Type="String" Name="CreatedBy" Nullable="false" />
-          <Property Type="String" Name="Reference" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CustomVariable" BaseType="SpecToolModel.Variable">
-          <Property Type="String" Name="CreatedBy" Nullable="false" />
-          <Property Type="String" Name="Reference" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StandardCodeList" BaseType="SpecToolModel.CodeList">
-          <NavigationProperty Name="MDR" Relationship="SpecToolModel.MDRStandardCodeList" FromRole="StandardCodeList" ToRole="MDR" />
-          <Property Type="Int32" Name="MDRId" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CustomCodeList" BaseType="SpecToolModel.CodeList">
-          </EntityType>
-        <Association Name="MDRStandardCodeList">
-          <End Type="SpecToolModel.MDR" Role="MDR" Multiplicity="1" />
-          <End Type="SpecToolModel.StandardCodeList" Role="StandardCodeList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MDR">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StandardCodeList">
-              <PropertyRef Name="MDRId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SpecDomain">
+        <EntityType Name="MetaDataVersion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Specification" Relationship="SpecToolModel.SpecificationSpecDomain" FromRole="SpecDomain" ToRole="Specification" />
-          <Property Type="Int32" Name="SpecificationId" Nullable="false" />
-          <NavigationProperty Name="Domain" Relationship="SpecToolModel.DomainSpecDomain" FromRole="SpecDomain" ToRole="Domain" />
-          <Property Type="Int32" Name="DomainId" Nullable="false" />
+          <NavigationProperty Name="Domains" Relationship="SpecToolModel.MetaDataVersionDomain" FromRole="MetaDataVersion" ToRole="Domain" />
+          <NavigationProperty Name="CodeLists" Relationship="SpecToolModel.MetaDataVersionCodeList" FromRole="MetaDataVersion" ToRole="CodeList" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Version" Nullable="false" />
         </EntityType>
-        <Association Name="SpecificationSpecDomain">
-          <End Type="SpecToolModel.Specification" Role="Specification" Multiplicity="1" />
-          <End Type="SpecToolModel.SpecDomain" Role="SpecDomain" Multiplicity="*" />
+        <Association Name="MetaDataVersionDomain">
+          <End Type="SpecToolModel.MetaDataVersion" Role="MetaDataVersion" Multiplicity="0..1" />
+          <End Type="SpecToolModel.Domain" Role="Domain" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Specification">
+            <Principal Role="MetaDataVersion">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SpecDomain">
-              <PropertyRef Name="SpecificationId" />
+            <Dependent Role="Domain">
+              <PropertyRef Name="MetaDataVersionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SpecDomainVariable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="DomainVariable" Relationship="SpecToolModel.DomainVariableSpecDomainVariable" FromRole="SpecDomainVariable" ToRole="DomainVariable" />
-          <Property Type="Int32" Name="DomainVariableId" Nullable="false" />
-          <NavigationProperty Name="Specification" Relationship="SpecToolModel.SpecificationSpecDomainVariable" FromRole="SpecDomainVariable" ToRole="Specification" />
-          <Property Type="Int32" Name="SpecificationId" Nullable="false" />
-        </EntityType>
-        <Association Name="DomainVariableSpecDomainVariable">
-          <End Type="SpecToolModel.DomainVariable" Role="DomainVariable" Multiplicity="1" />
-          <End Type="SpecToolModel.SpecDomainVariable" Role="SpecDomainVariable" Multiplicity="*" />
+        <Association Name="MetaDataVersionCodeList">
+          <End Type="SpecToolModel.MetaDataVersion" Role="MetaDataVersion" Multiplicity="0..1" />
+          <End Type="SpecToolModel.CodeList" Role="CodeList" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DomainVariable">
+            <Principal Role="MetaDataVersion">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SpecDomainVariable">
-              <PropertyRef Name="DomainVariableId" />
+            <Dependent Role="CodeList">
+              <PropertyRef Name="MetaDataVersionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SpecificationSpecDomainVariable">
-          <End Type="SpecToolModel.Specification" Role="Specification" Multiplicity="1" />
-          <End Type="SpecToolModel.SpecDomainVariable" Role="SpecDomainVariable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specification">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SpecDomainVariable">
-              <PropertyRef Name="SpecificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SpecCodeListValues">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="CodeListValue" Relationship="SpecToolModel.CodeListValuesSpecCodeListValues" FromRole="SpecCodeListValues" ToRole="CodeListValues" />
-          <Property Type="Int32" Name="CodeListValuesId" Nullable="false" />
-          <NavigationProperty Name="Specification" Relationship="SpecToolModel.SpecificationSpecCodeListValues" FromRole="SpecCodeListValues" ToRole="Specification" />
-          <Property Type="Int32" Name="SpecificationId" Nullable="false" />
-        </EntityType>
-        <Association Name="CodeListValuesSpecCodeListValues">
-          <End Type="SpecToolModel.CodeListValues" Role="CodeListValues" Multiplicity="1" />
-          <End Type="SpecToolModel.SpecCodeListValues" Role="SpecCodeListValues" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CodeListValues">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SpecCodeListValues">
-              <PropertyRef Name="CodeListValuesId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SpecificationSpecCodeListValues">
-          <End Type="SpecToolModel.Specification" Role="Specification" Multiplicity="1" />
-          <End Type="SpecToolModel.SpecCodeListValues" Role="SpecCodeListValues" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specification">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SpecCodeListValues">
-              <PropertyRef Name="SpecificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="DomainSpecDomain">
-          <End Type="SpecToolModel.Domain" Role="Domain" Multiplicity="1" />
-          <End Type="SpecToolModel.SpecDomain" Role="SpecDomain" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Domain">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SpecDomain">
-              <PropertyRef Name="DomainId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SpecToolModelStoreContainer" CdmEntityContainer="SpecToolModelContext">
-    <EntitySetMapping Name="MDRs">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.MDR)">
-        <MappingFragment StoreEntitySet="MDRs">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Version" ColumnName="Version" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Specifications">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Specification)">
-        <MappingFragment StoreEntitySet="Specifications">
+    <EntitySetMapping Name="Compounds">
+      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Compound)">
+        <MappingFragment StoreEntitySet="Compounds">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="StudyId" ColumnName="StudyId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Components">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Component)">
-        <MappingFragment StoreEntitySet="Components">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Domains">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Domain)">
-        <MappingFragment StoreEntitySet="Domains">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Classification" ColumnName="Classification" />
-          <ScalarProperty Name="Purpose" ColumnName="Purpose" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.StandardDomain)">
-        <MappingFragment StoreEntitySet="Domains_StandardDomain">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="MDRId" ColumnName="MDRId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.CustomDomain)">
-        <MappingFragment StoreEntitySet="Domains_CustomDomain">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="Reference" ColumnName="Reference" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Variables">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Variable)">
-        <MappingFragment StoreEntitySet="Variables">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="DomainVariablePattern" ColumnName="DomainVariablePattern" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.StandardVariable)">
-        <MappingFragment StoreEntitySet="Variables_StandardVariable">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="MDRId" ColumnName="MDRId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.CustomVariable)">
-        <MappingFragment StoreEntitySet="Variables_CustomVariable">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="Reference" ColumnName="Reference" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -982,18 +591,7 @@
         <MappingFragment StoreEntitySet="Studies">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DomainVariables">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.DomainVariable)">
-        <MappingFragment StoreEntitySet="DomainVariables">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Required" ColumnName="Required" />
-          <ScalarProperty Name="HasCodeList" ColumnName="HasCodeList" />
-          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
-          <ScalarProperty Name="VariableId" ColumnName="VariableId" />
+          <ScalarProperty Name="CompoundId" ColumnName="ComponentId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1002,17 +600,14 @@
         <MappingFragment StoreEntitySet="CodeLists">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.StandardCodeList)">
-        <MappingFragment StoreEntitySet="CodeLists_StandardCodeList">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="MDRId" ColumnName="MDRId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.CustomCodeList)">
-        <MappingFragment StoreEntitySet="CodeLists_CustomCodeList">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="VariableId" ColumnName="VariableId" />
+          <ScalarProperty Name="DefinitionText" ColumnName="DefinitionText" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DataType" ColumnName="DataType" />
+          <ScalarProperty Name="IsStandard" ColumnName="IsStandard" />
+          <ScalarProperty Name="IsTemplate" ColumnName="IsTemplate" />
+          <ScalarProperty Name="CodeListId" ColumnName="CodeListId" />
+          <ScalarProperty Name="MetaDataVersionId" ColumnName="MetaDataVersionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1026,30 +621,52 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SpecDomains">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.SpecDomain)">
-        <MappingFragment StoreEntitySet="SpecDomains">
+    <EntitySetMapping Name="Domains">
+      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Domain)">
+        <MappingFragment StoreEntitySet="Domains">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SpecificationId" ColumnName="SpecificationId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="StructureDescription" ColumnName="StructureDescription" />
+          <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+          <ScalarProperty Name="IsStandard" ColumnName="IsStandard" />
+          <ScalarProperty Name="IsTemplate" ColumnName="IsTemplate" />
+          <ScalarProperty Name="StudyId" ColumnName="StudyId" />
           <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="MetaDataVersionId" ColumnName="MetaDataVersionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SpecDomainVariables">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.SpecDomainVariable)">
-        <MappingFragment StoreEntitySet="SpecDomainVariables">
+    <EntitySetMapping Name="Variables">
+      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.Variable)">
+        <MappingFragment StoreEntitySet="Variables">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="DomainVariableId" ColumnName="DomainVariableId" />
-          <ScalarProperty Name="SpecificationId" ColumnName="SpecificationId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BaseName" ColumnName="BaseName" />
+          <ScalarProperty Name="LableText" ColumnName="LableText" />
+          <ScalarProperty Name="Core" ColumnName="Core" />
+          <ScalarProperty Name="Origin" ColumnName="Origin" />
+          <ScalarProperty Name="Mandatory" ColumnName="Mandatory" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="CodeListId" ColumnName="CodeListId" />
+          <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="IsStandard" ColumnName="IsStandard" />
+          <ScalarProperty Name="IsTemplate" ColumnName="IsTemplate" />
+          <ScalarProperty Name="VariableId" ColumnName="VariableId" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="SignificantDigits" ColumnName="SignificantDigits" />
+          <ScalarProperty Name="DataType" ColumnName="DataType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SpecCodeListValues">
-      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.SpecCodeListValues)">
-        <MappingFragment StoreEntitySet="SpecCodeListValues">
+    <EntitySetMapping Name="MetaDataVersions">
+      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.MetaDataVersion)">
+        <MappingFragment StoreEntitySet="MetaDataVersions">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CodeListValuesId" ColumnName="CodeListValuesId" />
-          <ScalarProperty Name="SpecificationId" ColumnName="SpecificationId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
