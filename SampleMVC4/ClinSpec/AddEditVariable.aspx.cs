@@ -241,7 +241,7 @@ namespace ClinSpec
 
         protected void btnClose_ServerClick(object sender, EventArgs e)
         {
-            Response.Redirect("UpdateDomain.aspx?StudyID=" + StudyId.ToString());
+            Response.Redirect("UpdateDomain.aspx?StudyID=" + StudyId.ToString()  +"&DomainId=" + DomainId.ToString());
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.Entity;
 using System.Text;
+using DataAccess;
 
 namespace ClinSpec
 {
@@ -47,10 +48,16 @@ namespace ClinSpec
 
                 if (!IsPostBack)
                 {
-                    lstDomains.DataSource = study.Domains;
-                    lstDomains.DataTextField = "Name";
-                    lstDomains.DataValueField = "Id";
-                    lstDomains.DataBind();
+                    foreach (var dm in study.Domains)
+                    {
+                        lstDomains.Items.Add(new ListItem(string.Format("{0} ({1})", dm.Description, dm.Name), dm.Id.ToString()));                        
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(Request.QueryString["DomainId"]))
+                    {
+                        lstDomains.SelectedValue = Request.QueryString["DomainId"];
+                    }
+
                     lstDomains_SelectedIndexChanged(null, null);
                 }
             }
@@ -162,7 +169,8 @@ namespace ClinSpec
                 {
                     DomainId = d.Id,
                     DomainName = d.Name,
-                    VaribleName = v.LableText + " (" + v.Name + ")",
+                    VaribleName = v.Name,
+                    VarObject = v,
                     VariableId = v.Id,
                     IsRequired = (v.Core == DataAccess.VariableCore.Req),
                     CodeListIdInVar = v.CodeListId,
@@ -190,7 +198,7 @@ select new
 {
     DomainId = d.Id,
     DomainName = d.Name,
-    VaribleName = v.LableText + " (" + v.Name + ")",
+    VaribleName = v.Name,
     VariableId = v.Id,
     CodeListIdInVar = v.CodeListId,
     CodeListName = vcl2 != null ? vcl2.Name : null,
@@ -207,7 +215,7 @@ select new
 
                 foreach (var v in domainVarData)
                 {
-                    var varRow = new GridData() { RowType = "Variable", VariableId = v.VariableId, Name = v.VaribleName, IsExcluded = v.IsVarExcluded, AllowExclusion = !v.IsRequired };
+                    var varRow = new GridData() { RowType = "Variable", VariableId = v.VariableId, Name = v.VaribleName, IsExcluded = v.IsVarExcluded, AllowExclusion = !v.IsRequired, VarObj = v.VarObject };
                     gridData.Add(varRow);
 
                     if (v.CodeListIdInVar != null)
@@ -219,7 +227,7 @@ select new
 
                         foreach (var clv in clvs)
                         {
-                            gridData.Add(new GridData() { RowType = "CodeList", VariableId = v.VariableId, CodeListId = clv.CodeListId.Value, CodeListValueId = clv.CodeListValueId.Value, Name = v.VaribleName, IsExcluded = clv.IsCLVExcluded, AllowExclusion = true, CodeListName = clv.CodeListName, CodeListCode = clv.CodeListValueCode, CodeListValue = clv.CodeListValueDecode });
+                            gridData.Add(new GridData() { RowType = "CodeList", VariableId = v.VariableId, VarObj = v.VarObject, CodeListId = clv.CodeListId.Value, CodeListValueId = clv.CodeListValueId.Value, Name = v.VaribleName, IsExcluded = clv.IsCLVExcluded, AllowExclusion = true, CodeListName = clv.CodeListName, CodeListCode = clv.CodeListValueCode, CodeListValue = clv.CodeListValueDecode });
 
                         }
                     }
@@ -247,6 +255,15 @@ select new
                 string sep = string.IsNullOrEmpty(e.Row.CssClass) ? string.Empty : " ";
                 e.Row.CssClass += sep + rowcolor + "-rowstyle";
 
+                if (rowcolor == "CodeList")
+                {
+                    sep = string.IsNullOrEmpty(e.Row.Cells[0].CssClass) ? string.Empty : " ";
+                    e.Row.Cells[0].CssClass += sep + "coldlist-valuecol";
+
+                    sep = string.IsNullOrEmpty(e.Row.Cells[1].CssClass) ? string.Empty : " ";
+                    e.Row.Cells[1].CssClass += sep + "coldlist-namecol";
+
+                }
             }
             else if (e.Row.RowType == DataControlRowType.Header)
             {
@@ -293,6 +310,9 @@ select new
         public bool AllowExclusion { get; set; }
 
         public bool IsExcluded { get; set; }
+
+        public Variable VarObj { get; set; }
+
 
     }
 }

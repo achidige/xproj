@@ -30,7 +30,7 @@ namespace ClinSpec
 
         public static string NodeText(this DataAccess.Domain e)
         {
-            return string.Format("{0} [DomainId:{1}]", e.Name, e.Id);
+            return string.Format("{0} ({1}) ", e.Description,e.Name);
         }
 
         public static string NodeId(this DataAccess.Domain e)
@@ -50,7 +50,7 @@ namespace ClinSpec
 
         public static string NodeText(this DataAccess.CodeListValues e)
         {
-            return string.Format("{0} [CodeListValuesId:{1}]", e.Name, e.Id);
+            return string.Format("{0}", e.Name);
         }
 
         public static string NodeId(this DataAccess.CodeListValues e)
@@ -61,7 +61,7 @@ namespace ClinSpec
 
         public static string NodeText(this DataAccess.Compound e)
         {
-            return string.Format("{0} [CompoundId:{1}]", e.Name, e.Id);
+            return string.Format("{0}", e.Name, e.Id);
         }
 
         public static string NodeId(this DataAccess.Compound e)
@@ -71,7 +71,7 @@ namespace ClinSpec
 
         public static string NodeText(this DataAccess.Study e)
         {
-            return string.Format("{0} [StudyId:{1}]", e.Name, e.Id);
+            return string.Format("{0}", e.Name, e.Id);
         }
 
         public static string NodeId(this DataAccess.Study e)

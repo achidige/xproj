@@ -117,7 +117,7 @@
             <span class="span7">
                 <asp:Label ID="lblMessages" runat="server" Text=""  Style="color: red" CssClass="input-error"></asp:Label>                
                 <button type="button" class="btn btn-primary button-next" runat="server" id="btnSave" onserverclick="btnSave_ServerClick">Save</button> &nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-primary button-close" runat="server" id="btnClose" causesvalidation="false" onserverclick="btnClose_ServerClick">Close</button> &nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary button-close" runat="server" id="btnClose" causesvalidation="false" onserverclick="btnClose_ServerClick">Save & Close</button> &nbsp;&nbsp;&nbsp;
 
             </span>
 

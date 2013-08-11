@@ -391,6 +391,8 @@
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ExcelDocument.cs" />
+    <Compile Include="ExcelExport.cs" />
     <Compile Include="ExcelUtils.cs" />
     <Compile Include="UpdateDomain.aspx.cs">
       <DependentUpon>UpdateDomain.aspx</DependentUpon>

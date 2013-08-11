@@ -22,6 +22,7 @@
     <Node Id="Microsoft.AspNet.Web.Optimization.WebForms 1.0.0" Label="Microsoft.AspNet.Web.Optimization.WebForms 1.0.0" Category="Package" />
     <Node Id="Microsoft.Web.Infrastructure 1.0.0.0" Label="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package" />
     <Node Id="Modernizr 2.5.3" Label="Modernizr 2.5.3" Category="Package" />
+    <Node Id="OpenXmlSdk 2.0.0" Label="OpenXmlSdk 2.0.0" Category="Package" />
     <Node Id="WebGrease 1.1.0" Label="WebGrease 1.1.0" Category="Package" />
     <Node Id="DataAccess" Label="DataAccess" Category="Project" />
     <Node Id="EntityFramework 5.0.0" Label="EntityFramework 5.0.0" Category="Package" />
@@ -51,6 +52,7 @@
     <Link Source="ClinSpec" Target="Microsoft.AspNet.ScriptManager.WebForms 4.5.6" Category="Installed Package" />
     <Link Source="ClinSpec" Target="Microsoft.AspNet.Web.Optimization.WebForms 1.0.0" Category="Installed Package" />
     <Link Source="ClinSpec" Target="Modernizr 2.5.3" Category="Installed Package" />
+    <Link Source="ClinSpec" Target="OpenXmlSdk 2.0.0" Category="Installed Package" />
     <Link Source="DataAccess" Target="EntityFramework 5.0.0" Category="Installed Package" />
   </Links>
   <Categories>

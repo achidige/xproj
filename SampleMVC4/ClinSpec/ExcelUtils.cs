@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Linq;
 
 namespace ClinSpec
 {
@@ -40,7 +43,102 @@ namespace ClinSpec
             // Stylesheet
             workbookStylesPart = spreadSheet.WorkbookPart.AddNewPart<DocumentFormat.OpenXml.Packaging.WorkbookStylesPart>();
             workbookStylesPart.Stylesheet = new DocumentFormat.OpenXml.Spreadsheet.Stylesheet();
+
+
+            Stylesheet stylesheet1 = workbookStylesPart.Stylesheet;
+
+            Fonts fonts1 = new Fonts() { Count = (UInt32Value)1U };
+
+            Font font1 = new Font();
+            FontSize fontSize1 = new FontSize() { Val = 11D };
+            Color color1 = new Color() { Theme = (UInt32Value)1U };
+            FontName fontName1 = new FontName() { Val = "Calibri" };
+            FontFamilyNumbering fontFamilyNumbering1 = new FontFamilyNumbering() { Val = 2 };
+            FontScheme fontScheme1 = new FontScheme() { Val = FontSchemeValues.Minor };
+
+            font1.Append(fontSize1);
+            font1.Append(color1);
+            font1.Append(fontName1);
+            font1.Append(fontFamilyNumbering1);
+            font1.Append(fontScheme1);
+
+            fonts1.Append(font1);
+
+            Fills fills1 = new Fills() { Count = (UInt32Value)1U };
+
+            
+            //Fill fill2 = new Fill();
+            //PatternFill patternFill2 = new PatternFill() { PatternType = PatternValues.Gray125 };
+            //fill2.Append(patternFill2);
+
+            Fill fill2 = new Fill(
+              new PatternFill(
+                  new ForegroundColor()
+                  {
+                      Rgb = new HexBinaryValue()
+                      {
+                          Value =
+                          System.Drawing.ColorTranslator.ToHtml(
+                              System.Drawing.Color.FromArgb(146,208,80)).Replace("#", "")
+                      }
+                  })
+              {
+                  PatternType = PatternValues.Solid
+              }
+          );
+
+
+            
+
+            fills1.Append(fill2);
+
+            Borders borders1 = new Borders() { Count = (UInt32Value)1U };
+
+            Border border1 = new Border();
+            LeftBorder leftBorder1 = new LeftBorder();
+            RightBorder rightBorder1 = new RightBorder();
+            TopBorder topBorder1 = new TopBorder();
+            BottomBorder bottomBorder1 = new BottomBorder();
+            DiagonalBorder diagonalBorder1 = new DiagonalBorder();
+
+            border1.Append(leftBorder1);
+            border1.Append(rightBorder1);
+            border1.Append(topBorder1);
+            border1.Append(bottomBorder1);
+            border1.Append(diagonalBorder1);
+
+            borders1.Append(border1);
+
+            CellStyleFormats cellStyleFormats1 = new CellStyleFormats() { Count = (UInt32Value)1U };
+            
+             CellFormat cellFormat1 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U };
+
+            cellStyleFormats1.Append(cellFormat1);
+
+            CellFormats cellFormats1 = new CellFormats() { Count = (UInt32Value)1U };
+            CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U };
+
+            cellFormats1.Append(cellFormat2);
+
+            CellStyles cellStyles1 = new CellStyles() { Count = (UInt32Value)1U };
+            CellStyle cellStyle1 = new CellStyle() { Name = "Normal", FormatId = (UInt32Value)0U, BuiltinId = (UInt32Value)0U };
+
+            cellStyles1.Append(cellStyle1);
+            DifferentialFormats differentialFormats1 = new DifferentialFormats() { Count = (UInt32Value)0U };
+            TableStyles tableStyles1 = new TableStyles() { Count = (UInt32Value)0U, DefaultTableStyle = "TableStyleMedium9", DefaultPivotStyle = "PivotStyleLight16" };
+
+            stylesheet1.Append(fonts1);
+            stylesheet1.Append(fills1);
+            stylesheet1.Append(borders1);
+            stylesheet1.Append(cellStyleFormats1);
+            stylesheet1.Append(cellFormats1);
+            stylesheet1.Append(cellStyles1);
+            stylesheet1.Append(differentialFormats1);
+            stylesheet1.Append(tableStyles1);
+
+
             workbookStylesPart.Stylesheet.Save();
+
          } catch (System.Exception exception) {
              throw;
          }
@@ -83,105 +181,111 @@ namespace ClinSpec
       /// <param name="spreadsheet">Spreadsheet to use</param>
       /// <returns>True if succesful</returns>
       public static bool AddBasicStyles(DocumentFormat.OpenXml.Packaging.SpreadsheetDocument spreadsheet) {
-         DocumentFormat.OpenXml.Spreadsheet.Stylesheet stylesheet = spreadsheet.WorkbookPart.WorkbookStylesPart.Stylesheet;
 
-         // Numbering formats (x:numFmts)
-         stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.NumberingFormats>(new DocumentFormat.OpenXml.Spreadsheet.NumberingFormats(), 0);
-         // Currency
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.NumberingFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.NumberingFormat>(
-            new DocumentFormat.OpenXml.Spreadsheet.NumberingFormat() {
-               NumberFormatId = 164,
-               FormatCode = "#,##0.00"
-               + "\\ \"" + System.Globalization.CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol + "\""
-            }, 0);
+         // DocumentFormat.OpenXml.Spreadsheet.Stylesheet stylesheet = new Stylesheet();
 
-         // Fonts (x:fonts)
-         stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.Fonts>(new DocumentFormat.OpenXml.Spreadsheet.Fonts(), 1);
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Fonts>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.Font>(
-            new DocumentFormat.OpenXml.Spreadsheet.Font() {
-               FontSize = new DocumentFormat.OpenXml.Spreadsheet.FontSize() {
-                  Val = 11
-               },
-               FontName = new DocumentFormat.OpenXml.Spreadsheet.FontName() {
-                  Val = "Calibri"
-               }
-            }, 0);
+         // spreadsheet.WorkbookPart.WorkbookStylesPart.Stylesheet = stylesheet;
 
-         // Fills (x:fills)
-         stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.Fills>(new DocumentFormat.OpenXml.Spreadsheet.Fills(), 2);
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Fills>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.Fill>(
-            new DocumentFormat.OpenXml.Spreadsheet.Fill() {
-               PatternFill = new DocumentFormat.OpenXml.Spreadsheet.PatternFill() {
-                  PatternType = new DocumentFormat.OpenXml.EnumValue<DocumentFormat.OpenXml.Spreadsheet.PatternValues>() {
-                     Value = DocumentFormat.OpenXml.Spreadsheet.PatternValues.None
-                  }
-               }
-            }, 0);
+         ////DocumentFormat.OpenXml.Spreadsheet.Stylesheet stylesheet = spreadsheet.WorkbookPart.WorkbookStylesPart.Stylesheet;
 
-         // Borders (x:borders)
-         stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.Borders>(new DocumentFormat.OpenXml.Spreadsheet.Borders(), 3);
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Borders>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.Border>(
-            new DocumentFormat.OpenXml.Spreadsheet.Border() {
-               LeftBorder = new DocumentFormat.OpenXml.Spreadsheet.LeftBorder(),
-               RightBorder = new DocumentFormat.OpenXml.Spreadsheet.RightBorder(),
-               TopBorder = new DocumentFormat.OpenXml.Spreadsheet.TopBorder(),
-               BottomBorder = new DocumentFormat.OpenXml.Spreadsheet.BottomBorder(),
-               DiagonalBorder = new DocumentFormat.OpenXml.Spreadsheet.DiagonalBorder()
-            }, 0);
+         //// Numbering formats (x:numFmts)
+         //stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.NumberingFormats>(new DocumentFormat.OpenXml.Spreadsheet.NumberingFormats(), 0);
+         //// Currency
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.NumberingFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.NumberingFormat>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.NumberingFormat() {
+         //      NumberFormatId = 164,
+         //      FormatCode = "#,##0.00"
+         //      + "\\ \"" + System.Globalization.CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol + "\""
+         //   }, 0);
 
-         // Cell style formats (x:CellStyleXfs)
-         stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellStyleFormats>(new DocumentFormat.OpenXml.Spreadsheet.CellStyleFormats(), 4);
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellStyleFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
-            new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
-               NumberFormatId = 0,
-               FontId = 0,
-               FillId = 0,
-               BorderId = 0
-            }, 0);
+         //// Fonts (x:fonts)
+         //stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.Fonts>(new DocumentFormat.OpenXml.Spreadsheet.Fonts(), 1);
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Fonts>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.Font>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.Font() {
+         //      FontSize = new DocumentFormat.OpenXml.Spreadsheet.FontSize() {
+         //         Val = 11
+         //      },
+         //      FontName = new DocumentFormat.OpenXml.Spreadsheet.FontName() {
+         //         Val = "Calibri"
+         //      }
+         //   }, 0);
 
-         // Cell formats (x:CellXfs)
-         stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormats>(new DocumentFormat.OpenXml.Spreadsheet.CellFormats(), 5);
-         // General text
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
-            new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
-               FormatId = 0,
-               NumberFormatId = 0
-            }, 0);
-         // Date
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
-            new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
-               ApplyNumberFormat = true,
-               FormatId = 0,
-               NumberFormatId = 22,
-               FontId = 0,
-               FillId = 0,
-               BorderId = 0
-            },
-               1);
-         // Currency
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
-            new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
-               ApplyNumberFormat = true,
-               FormatId = 0,
-               NumberFormatId = 164,
-               FontId = 0,
-               FillId = 0,
-               BorderId = 0
-            },
-               2);
-         // Percentage
-         stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
-            new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
-               ApplyNumberFormat = true,
-               FormatId = 0,
-               NumberFormatId = 10,
-               FontId = 0,
-               FillId = 0,
-               BorderId = 0
-            },
-               3);
+         //// Fills (x:fills)
+         //stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.Fills>(new DocumentFormat.OpenXml.Spreadsheet.Fills(), 2);
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Fills>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.Fill>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.Fill() {
+         //      PatternFill = new DocumentFormat.OpenXml.Spreadsheet.PatternFill() {
+         //         PatternType = new DocumentFormat.OpenXml.EnumValue<DocumentFormat.OpenXml.Spreadsheet.PatternValues>() {
+         //            Value = DocumentFormat.OpenXml.Spreadsheet.PatternValues.None
+         //         }
+         //      }
+         //   }, 0);
 
-         stylesheet.Save();
+         //// Borders (x:borders)
+         //stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.Borders>(new DocumentFormat.OpenXml.Spreadsheet.Borders(), 3);
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Borders>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.Border>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.Border() {
+         //      LeftBorder = new DocumentFormat.OpenXml.Spreadsheet.LeftBorder(),
+         //      RightBorder = new DocumentFormat.OpenXml.Spreadsheet.RightBorder(),
+         //      TopBorder = new DocumentFormat.OpenXml.Spreadsheet.TopBorder(),
+         //      BottomBorder = new DocumentFormat.OpenXml.Spreadsheet.BottomBorder(),
+         //      DiagonalBorder = new DocumentFormat.OpenXml.Spreadsheet.DiagonalBorder()
+         //   }, 0);
+
+         //// Cell style formats (x:CellStyleXfs)
+         //stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellStyleFormats>(new DocumentFormat.OpenXml.Spreadsheet.CellStyleFormats(), 4);
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellStyleFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
+         //      NumberFormatId = 0,
+         //      FontId = 0,
+         //      FillId = 0,
+         //      BorderId = 0
+         //   }, 0);
+
+         //// Cell formats (x:CellXfs)
+         //stylesheet.InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormats>(new DocumentFormat.OpenXml.Spreadsheet.CellFormats(), 5);
+         //// General text
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
+         //      FormatId = 0,
+         //      NumberFormatId = 0
+         //   }, 0);
+         //// Date
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
+         //      ApplyNumberFormat = true,
+         //      FormatId = 0,
+         //      NumberFormatId = 22,
+         //      FontId = 0,
+         //      FillId = 0,
+         //      BorderId = 0
+         //   },
+         //      1);
+         //// Currency
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
+         //      ApplyNumberFormat = true,
+         //      FormatId = 0,
+         //      NumberFormatId = 164,
+         //      FontId = 0,
+         //      FillId = 0,
+         //      BorderId = 0
+         //   },
+         //      2);
+         //// Percentage
+         //stylesheet.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.CellFormats>().InsertAt<DocumentFormat.OpenXml.Spreadsheet.CellFormat>(
+         //   new DocumentFormat.OpenXml.Spreadsheet.CellFormat() {
+         //      ApplyNumberFormat = true,
+         //      FormatId = 0,
+         //      NumberFormatId = 10,
+         //      FontId = 0,
+         //      FillId = 0,
+         //      BorderId = 0
+         //   },
+         //      3);
+
+          //stylesheet.Save();
+
 
          return true;
       }
@@ -276,7 +380,8 @@ namespace ClinSpec
       /// <param name="useSharedString">Use shared strings? If true and the string isn't found in shared strings, it will be added</param>
       /// <param name="save">Save the worksheet</param>
       /// <returns>True if succesful</returns>
-      public static bool SetCellValue(DocumentFormat.OpenXml.Packaging.SpreadsheetDocument spreadsheet, DocumentFormat.OpenXml.Spreadsheet.Worksheet worksheet, uint columnIndex, uint rowIndex, string stringValue, bool useSharedString, bool save = true) {
+      public static bool SetCellValue(DocumentFormat.OpenXml.Packaging.SpreadsheetDocument spreadsheet, DocumentFormat.OpenXml.Spreadsheet.Worksheet worksheet, uint columnIndex, uint rowIndex, string stringValue, uint? styleIndex=null, bool useSharedString = false, bool save = true)
+      {
          string columnValue = stringValue;
          DocumentFormat.OpenXml.Spreadsheet.CellValues cellValueType;
 
@@ -291,7 +396,7 @@ namespace ClinSpec
             cellValueType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
          }
 
-         return SetCellValue(spreadsheet, worksheet, columnIndex, rowIndex, cellValueType, columnValue, null, save);
+         return SetCellValue(spreadsheet, worksheet, columnIndex, rowIndex, cellValueType, columnValue, styleIndex, save);
       }
 
       /// <summary>
@@ -508,5 +613,45 @@ namespace ClinSpec
 
          return true;
       }
+
+      /// <summary>
+      /// Creates a new Fill object and appends it to the WorkBook's stylesheet.
+      /// </summary>
+      /// <param name="styleSheet">The stylesheet for the current WorkBook.</param>
+      /// <param name="fillColor">The background color for the fill.</param>
+      /// <returns></returns>
+      public static UInt32Value CreateFill(
+          Stylesheet styleSheet,
+          System.Drawing.Color fillColor)
+      {
+          Fill fill = new Fill(
+              new PatternFill(
+                  new ForegroundColor()
+                  {
+                      Rgb = new HexBinaryValue()
+                      {
+                          Value =
+                          System.Drawing.ColorTranslator.ToHtml(
+                              System.Drawing.Color.FromArgb(
+                                  fillColor.A,
+                                  fillColor.R,
+                                  fillColor.G,
+                                  fillColor.B)).Replace("#", "")
+                      }
+                  })
+              {
+                  PatternType = PatternValues.Solid
+              }
+          );
+          styleSheet.Fills.Append(fill);
+
+          styleSheet.Save();
+
+          UInt32Value result = styleSheet.Fills.Count;
+          styleSheet.Fills.Count++;
+          return result;
+      }
+
+
    }
 }

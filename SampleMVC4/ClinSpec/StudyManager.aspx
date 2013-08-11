@@ -11,7 +11,7 @@
                 <asp:DropDownList class="input-xxlarge" id="lstComponent" onserverchange="lstComponent_ServerChange" runat="server" tabindex="1" AutoPostBack="True" OnSelectedIndexChanged="lstComponent_SelectedIndexChanged" >
                 </asp:DropDownList>
                  <br />
-                Or Enter A New Compound...
+                Or Enter A New Compound
                 <br />
                 <asp:TextBox  class="input-xxlarge" ID="txtComponent" runat="server"></asp:TextBox>
             </div>
@@ -23,7 +23,7 @@
                 <asp:DropDownList class="input-xxlarge" id="lstStudy" runat="server" onserverchange="lstStudy_ServerChange" tabindex="1" AutoPostBack="False" OnSelectedIndexChanged="lstStudy_SelectedIndexChanged">
                 </asp:DropDownList>
                 <br />
-                Or Enter A New Study...
+                Or Enter A New Study
                 <br />
                 <asp:TextBox  class="input-xxlarge" ID="txtNewStudy" runat="server"></asp:TextBox>
             </div>
@@ -31,7 +31,7 @@
 
         <div class="form-actions">
 
-            <asp:Label ID="lblMessages" runat="server" Text="Label" CssClass="input-error"></asp:Label> <br />
+            <asp:Label ID="lblMessages" runat="server" Text="Label" CssClass="text-error"></asp:Label> <br />
             <button type="submit" class="btn btn-primary button-next" runat="server" id="btnNext" onserverclick="btnNext_ServerClick">Next</button>
           
         </div>

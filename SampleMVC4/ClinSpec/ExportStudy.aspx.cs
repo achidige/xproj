@@ -48,7 +48,15 @@ namespace ClinSpec
                     using (var specDoc = ExcelUtils.CreateWorkbook(fullPath))
                     {
 
-                        ExcelUtils.AddBasicStyles(specDoc);
+                        //ExcelUtils.AddBasicStyles(specDoc);
+                        
+                        Stylesheet styleSheet = specDoc.WorkbookPart.WorkbookStylesPart.Stylesheet;
+
+                        //var specTitleStyle = ExcelUtils.CreateFill(styleSheet, System.Drawing.Color.FromArgb(146, 208, 80));
+                        //var tableHeaderStyle = ExcelUtils.CreateFill(styleSheet, System.Drawing.Color.FromArgb(0,176,80));
+                        //var dataAreaFillStyle = ExcelUtils.CreateFill(styleSheet, System.Drawing.Color.FromArgb(221,217,196));
+
+
 
                         foreach (var dm in study.Domains)
                         {
@@ -66,32 +74,38 @@ namespace ClinSpec
                                 }
                             }
 
+                            uint rowIndexId = 1;
+
+                            ExcelUtils.SetCellValue(specDoc, sheet, 1, rowIndexId++, string.Format("Specification for Protocol: {0}" , study.Name),0);
+
+                            //blankrow
+                            rowIndexId++;
+
+                            ExcelUtils.SetCellValue(specDoc, sheet, 1, rowIndexId++, string.Format("Domain: {0} ({1}) ", dm.Name,dm.Description));
+                            ExcelUtils.SetCellValue(specDoc, sheet, 1, rowIndexId++, string.Format("{0} ", dm.StructureDescription));
+                            
+
+
                             //write header
                             var headers = new string[] { 
-"METADATA_VERSION_NM",
-"DOMAIN_NM",
-"DOMAIN_DESC",
-"DOMAIN_CLASS_CD",
-"STRUCTURE_DESC",
 "VARIABLE_NM",
-"LABEL_TXT",
-"DATA_TYPE_CD",
-"LENGTH_NUM",
-"SIGNIFICANT_DIGITS_NUM",
-"CORE_CD",
+"VARIABLE DESCRIPTION",
+"DATA_TYPE",
+"LENGTH",
+"CORE",
 "ORIGIN_CD",
-"MANDATORY_IND",
-"ROLE_CD",
-"CONTROLLED_TERM_TXT",
-"CODED_VALUE",
-"DECODED_EN_TXT"};
+"MANDATORY",
+"CONTROLLED TERMINOLOGY",
+"CODED VALUE",
+"DECODE"
+                            };
 
-                            uint headerRow = 1;
+                            
                             for (uint i = 0; i < headers.Length; i++)
                             {
-                                ExcelUtils.SetCellValue(specDoc, sheet, i + 1, headerRow, headers[i], true, true);
+                                ExcelUtils.SetCellValue(specDoc, sheet, i + 1, rowIndexId, headers[i]);
                             }
-
+                            rowIndexId++;
 
 
                             var domainVarData =
@@ -150,46 +164,48 @@ namespace ClinSpec
 
 
 
-                            uint dataRow = 2;
+                            
                             foreach (var v in domainVarData)
                             {
                                 if (!v.IsVarExcluded)
                                 {
                                     uint dataCol = 1;
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, (dm.MetaDataVersion != null) ? dm.MetaDataVersion.Name : "", true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, dm.Name, true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, dm.Description, true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, dm.Class.ToString().Replace("_", " "), true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, dm.StructureDescription, false, true);
+                                    
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, v.VariableObject.Name);
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, v.VariableObject.LableText);
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, v.VariableObject.DataType.ToString());
+                                    
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, string.Format("{0}", v.VariableObject.Length));
+                                    
+                                    //ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, string.Format("{0}", v.VariableObject.SignificantDigits), true, true);
 
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.VariableObject.Name, true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.VariableObject.LableText, true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.VariableObject.DataType.ToString(), true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, string.Format("{0}", v.VariableObject.Length), true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, string.Format("{0}", v.VariableObject.SignificantDigits), true, true);
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, v.VariableObject.Core.ToString());
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, v.VariableObject.Origin.ToString());
 
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.VariableObject.Core.ToString(), true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.VariableObject.Origin.ToString(), true, true);
-
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.IsRequired ? "Yes" : "No", true, true);
-                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, v.VariableObject.Role.ToString(), true, true);
-
+                                    ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, v.IsRequired ? "Yes" : "No");
+                                    
                                     if (v.CodeListIdInVar != null)
                                     {
                                         var clvs = codeListData.Where(clv => clv.DomainId == v.DomainId && clv.VariableId == v.VariableId && clv.CodeListId == v.CodeListIdInVar && clv.IsCLVExcluded==false).ToList();
 
 
-                                        ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, clvs.First().CodeListName, true, true);
-                                        ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, clvs.First().CodeListValueCode, true, true);
-                                        ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, dataRow, clvs.First().CodeListValueDecode, true, true);
+                                        ExcelUtils.SetCellValue(specDoc, sheet, dataCol++, rowIndexId, clvs.First().CodeListName);
+
+                                        var clCodeColIndex = dataCol++;
+                                        var clValueColIndex = dataCol++;
+
 
                                         
+
+                                        foreach (var clv in clvs)
+                                        {
+                                            ExcelUtils.SetCellValue(specDoc, sheet, clCodeColIndex, rowIndexId, clv.CodeListValueCode);
+                                            ExcelUtils.SetCellValue(specDoc, sheet, clValueColIndex, rowIndexId, clv.CodeListValueDecode);
+                                            rowIndexId++;
+                                        }                                        
                                     }
-
-                                    dataRow++;
-
-
-                                    
+                                    else 
+                                        rowIndexId++;
 
 
                                 }

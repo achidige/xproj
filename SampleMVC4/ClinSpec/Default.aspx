@@ -8,7 +8,7 @@
         <div class="span7">
             <div class="box">
                 <div class="box-title">
-                    <h3><i class="icon-bar-chart"></i>Clinical Study Tool Stats</h3>
+                    <h3><i class="icon-bar-chart"></i>Clinical Study Metadata</h3>
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
                         <a data-action="close" href="#"><i class="icon-remove"></i></a>

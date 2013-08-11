@@ -70,11 +70,11 @@ GO
 IF OBJECT_ID(N'[dbo].[Studies]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Studies];
 GO
-IF OBJECT_ID(N'[SpecToolModelStoreContainer].[StudyCodeListValueExclusion]', 'U') IS NOT NULL
-    DROP TABLE [SpecToolModelStoreContainer].[StudyCodeListValueExclusion];
+IF OBJECT_ID(N'[dbo].[StudyCodeListValueExclusions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StudyCodeListValueExclusions];
 GO
-IF OBJECT_ID(N'[SpecToolModelStoreContainer].[StudyDomainVarExclusion]', 'U') IS NOT NULL
-    DROP TABLE [SpecToolModelStoreContainer].[StudyDomainVarExclusion];
+IF OBJECT_ID(N'[dbo].[StudyDomainVarExclusions]', 'U') IS NOT NULL
+    DROP TABLE dbo.[StudyDomainVarExclusions];
 GO
 IF OBJECT_ID(N'[dbo].[Variables]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Variables];

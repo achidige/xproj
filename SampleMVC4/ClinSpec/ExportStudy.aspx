@@ -5,7 +5,8 @@
     <div class="row-fluid">
         <div class="controls controls-row">
             <span class="span12">
-        If the excel file does not download automatically, click <a href="#" runat="server" id="exportLink">here</a> to downloan.
+        
+                If specification file did not download automatically, click <a href="#" runat="server" id="exportLink">here</a>.
             </span>
         </div>
     </div>

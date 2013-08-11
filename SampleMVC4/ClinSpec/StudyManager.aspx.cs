@@ -130,7 +130,7 @@ namespace ClinSpec
 
                 if (newStudyId == null && lstStudy.SelectedValue=="0")
                 {
-                    lblMessages.Text = "Select or add a study to continue...";
+                    lblMessages.Text = "Select or add a study to continue.";
                     return;
  
                 }

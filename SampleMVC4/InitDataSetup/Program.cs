@@ -38,16 +38,44 @@ namespace DataAccess
 
         static void Main(string[] args)
         {
-            LoadDomainData();
+            SetupMDRRecord();
 
             LoadCodeListData();
+
+            LoadDomainData();
 
             StandardTemplates();
             
 
             WritePrompt("Ener key to exit");
         }
+        static string MDRVERSIONID = "INTERNAL 425:2:ASSET:0:24271";
 
+        static void SetupMDRRecord()
+        {
+            using(var db = new DataAccess.SpecToolModelContext())
+            {
+
+                
+                var qMDRCheck = from item in db.MetaDataVersions
+                                where item.Name == MDRVERSIONID
+                                select item;
+
+                var mdrCheck = qMDRCheck.FirstOrDefault();
+
+                if (mdrCheck == null)
+                {
+                    WriteTitle(string.Format("Adding MDR: {0} :", MDRVERSIONID));
+
+                    db.MetaDataVersions.Add(new MetaDataVersion() { Name = MDRVERSIONID, Version = MDRVERSIONID });
+
+                    db.SaveChanges();
+
+                    WriteTitle("Done!");
+
+                }
+            }
+        }
         static void LoadCodeListData()
         {
             DataTable dt = GetInputdate("domain_variable_TestStudy.xls", "select * From [codelist_item_all$] where CODELIST_SOURCE_NM='MDR' and	CODELIST_VERSION_NM='DEV' and CODELIST_SOURCE_DESC='Sanofi MDR Dev instance' and CODELIST_CD<>'' and DECODED_EN_TXT<>'' ");
@@ -55,7 +83,7 @@ namespace DataAccess
             using (var db = new SpecToolModelContext())
             {
                 var qMDRCheck = from item in db.MetaDataVersions
-                                where item.Name == "INTERNAL 425:2:ASSET:0:24271"
+                                where item.Name == MDRVERSIONID
                                 select item;
 
                 var mdrCheck = qMDRCheck.FirstOrDefault();
@@ -390,69 +418,7 @@ namespace DataAccess
         }
    
 
-        //static void DumpData()
-        //{
-
-        //    using (var db = new SpecToolModelContext())
-        //    {
-
-        //        var query = from m in db.MDRs
-        //                    select m;
-
-        //        writetitle("MDRs in the database:");
-
-        //        foreach (var item in query)
-        //        {
-        //            Console.WriteLine("Id: {0} | Name: {1} | Version: {2}", item.Id, item.Name, item.Version);
-        //        }
-
-
-        //        writetitle("Domains in the database:");
-
-
-        //        var q2 = from domain in db.Domains
-        //                 select domain;
-
-        //        foreach (var item in q2)
-        //        {
-        //            Console.WriteLine("Type:{0} | Id: {1} | Name: {2} | Purpose: {3} | Classification: {4} ", ((item is StandardDomain) ? "StandardDomain" : (item is CustomDomain) ? "CustomeDomain" : "[Error: Unkown Domain]"), item.Id, item.Name, item.Purpose, item.Classification);
-
-        //            var qDomVar = from domvar in db.DomainVariables
-        //                          join v in db.Variables on
-        //                          new { vid = domvar.VariableId, did = domvar.DomainId } equals new { vid = v.Id, did = item.Id }
-        //                          select domvar;
-
-        //            writetitle(string.Format("{0} Domain Varaible:", item.Name));
-
-        //            foreach (var item2 in qDomVar)
-        //            {
-        //                Console.WriteLine("Type:{0} | Id: {1} | Name: {2} | Description: {3} | Required: {4} ", ((item2.Variable is StandardVariable) ? "StandardVariable" : (item2.Variable is CustomVariable) ? "CustomVaraible" : "[Error: Unkown Var]"),
-        //         item2.Variable.Id,
-        //         item2.Variable.Name,
-        //         item2.Variable.Description,
-        //         item2.Required);
-        //            }
-
-        //        }
-
-
-
-        //        writetitle("All Variables in the database:");
-
-        //        var qVar = from var in db.Variables
-        //                   select var;
-
-        //        foreach (var item in qVar)
-        //        {
-        //            Console.WriteLine("Type:{0} | Id: {1} | Name: {2} | Description: {3} ", ((item is StandardVariable) ? "StandardVariable" : (item is CustomVariable) ? "CustomVaraible" : "[Error: Unkown Var]"),
-        //                item.Id,
-        //                item.Name,
-        //                item.Description);
-        //        }
-
-
-        //    }
-        //}
+    
 
         static void WriteTitle(string s)
         {

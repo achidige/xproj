@@ -1,3 +1,4 @@
+--drop table #temp
 
 select cl.Name,cl.Id,cl.MetaDataVersionId,count(distinct v.Id) 'cntvars' into #temp
 from dbo.CodeLists cl left join dbo.Variables v on cl.Id = v.CodeListId
@@ -88,3 +89,8 @@ from
 select cl.Name,cl.Id,cl.MetaDataVersionId,count(distinct v.Id) 'cntvars' 
 from dbo.CodeLists cl left join dbo.Variables v on cl.Id = v.CodeListId
 group by cl.Name,cl.Id,cl.MetaDataVersionId
+
+
+delete from Domains where StudyId is not null
+delete from Variables where DomainId in (select Id from Domains where StudyId is not null)
+delete from studies
