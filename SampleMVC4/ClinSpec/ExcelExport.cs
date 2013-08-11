@@ -22,7 +22,7 @@ namespace Lateral8.Articles.OpenXML
         #region Public Methods
 
         public void ExportDataTable(
-            Study study, 
+            Study s, 
             string exportFile)
         {
             //create the empty spreadsheet template and save the file
@@ -39,63 +39,372 @@ namespace Lateral8.Articles.OpenXML
                 WorksheetPart worksheet = workbook.WorksheetParts.Last();
                 SheetData data = worksheet.Worksheet.GetFirstChild<SheetData>();
 
-                //add column names to the first row
-                Row header = new Row();
-                header.RowIndex = (UInt32)1;
-
+                
                 Stylesheet styleSheet = workbook.WorkbookStylesPart.Stylesheet;
 
+                UInt32Value bottomOnlyBorderIndex = createBorder(styleSheet, false, true, false, false);
+                UInt32Value allBorderIndex = createBorder(styleSheet, true, true, true, true);
+                UInt32Value nullBorderIndex = createBorder(styleSheet, false, false, false, false);
+                
+                
+
                 //build the formatted header style
-                UInt32Value headerFontIndex = 
+                UInt32Value fontIndex = 
                     createFont(
-                        styleSheet, 
-                        "Arial", 
-                        12, 
-                        true, 
-                        System.Drawing.Color.White);
+                        styleSheet,
+                        "Cabrili", 
+                        11, 
+                        false, 
+                        System.Drawing.Color.Black);
+
                 //set the background color style
                 UInt32Value headerFillIndex =
                     createFill(
                         styleSheet,
-                        System.Drawing.Color.SlateGray);
+                        System.Drawing.Color.FromArgb(146, 208, 80));
+                
                 //create the cell style by combining font/background
                 UInt32Value headerStyleIndex =
                     createCellFormat(
                         styleSheet,
-                        headerFontIndex,
+                        fontIndex,
                         headerFillIndex,
-                        null);
+                        null,bottomOnlyBorderIndex);
+
+
+                //build the formatted header style
                 
-                //foreach (DataColumn column in table.Columns)
-                //{
-                //    Cell headerCell = createTextCell(
-                //        table.Columns.IndexOf(column) + 1, 
-                //        1, 
-                //        column.ColumnName,
-                //        headerStyleIndex);
+                //set the background color style
+                UInt32Value bgColorFillIndex =
+                    createFill(
+                        styleSheet,
+                        System.Drawing.Color.FromArgb(221, 217, 196));
 
-                //    header.AppendChild(headerCell); 
-                //}
 
-                data.AppendChild(header);
+                //create the cell style by combining font/background
+                UInt32Value blankCellStyleIndex =
+                    createCellFormat(
+                        styleSheet,
+                        fontIndex,
+                        bgColorFillIndex,
+                        null,nullBorderIndex);
 
-                /*
-                 * Create a set of basic cell styles for specific formats...
-                 * If you are controlling your table then you can simply create the styles you need,
-                 * this set of code is still intended to be generic.
-                 */
-                _numberStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(3));
-                _doubleStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(4));
-                _dateStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(14));
 
-                //loop through each data row
-                DataRow contentRow;
-           
-                //for (int i = 0;i < table.Rows.Count; i++)
-                //{
-                //    contentRow = table.Rows[i];
-                //    data.AppendChild(createContentRow(contentRow, i + 2));
-                //}
+                
+                //create the cell style by combining font/background
+                UInt32Value dataRowStyleIndex =
+                    createCellFormat(
+                        styleSheet,
+                        fontIndex,
+                        bgColorFillIndex,
+                        null,allBorderIndex);
+
+
+                //build the formatted header style
+                
+                //set the background color style
+                UInt32Value tableHeaderColorFillIndex =
+                    createFill(
+                        styleSheet,
+                        System.Drawing.Color.FromArgb(0, 176, 80));
+
+                //create the cell style by combining font/background
+                UInt32Value tableHeaderStyleIndex =
+                    createCellFormat(
+                        styleSheet,
+                        fontIndex,
+                        tableHeaderColorFillIndex,
+                        null,allBorderIndex);
+
+
+
+                using (var db = new SpecToolModelContext())
+                {
+
+                  //  db.Studies.Attach(s);
+                    int rowIndex = 1;
+
+                    Row row = new Row();
+
+                    row.RowIndex = (uint)rowIndex;
+                    /*
+                     146,208,80
+0,176,80
+221,217,196
+                     */
+
+                    row.Append(
+                    
+                        createTextCell(1, rowIndex,
+                            string.Format("Specification for Protocol: {0}", s.Name),
+                            headerStyleIndex)
+                            );
+
+
+                    for (int i = 2; i <= 10; i++)
+                    {
+                        Cell c = new Cell();
+                        c.CellReference = getColumnName(i)+rowIndex;
+                        c.StyleIndex = headerStyleIndex;
+                        row.Append(c);
+                    }
+
+                    data.AppendChild(row);
+                    rowIndex++;
+                    row = new Row();
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        Cell c = new Cell();
+                        c.CellReference = getColumnName(i)+rowIndex;
+                        c.StyleIndex = blankCellStyleIndex;
+                        row.Append(c);
+                    }
+
+                    data.AppendChild(row);
+
+                    foreach (var dm in s.Domains)
+                    {
+                        rowIndex++;
+                        row = new Row();
+
+                        row.Append(
+                            createTextCell(1, rowIndex,
+                               string.Format("Domain: {0} ({1})", dm.Name,dm.Description),
+                               blankCellStyleIndex)
+                               );
+                        for (int i = 2; i <= 10; i++)
+                        {
+                            Cell c = new Cell();
+                            c.CellReference = getColumnName(i) + rowIndex;
+                            c.StyleIndex = blankCellStyleIndex;
+                            row.Append(c);
+                        }
+
+                        data.AppendChild(row);
+
+
+                        rowIndex++;
+                        row = new Row();
+
+                        row.Append(
+                            createTextCell(1, rowIndex,
+                               string.Format("{0}", dm.StructureDescription),
+                               blankCellStyleIndex)
+                               );
+                        for (int i = 2; i <= 10; i++)
+                        {
+                            Cell c = new Cell();
+                            c.CellReference = getColumnName(i) + rowIndex;
+                            c.StyleIndex = blankCellStyleIndex;
+                            row.Append(c);
+                        }
+
+                        data.AppendChild(row);
+
+
+
+
+                        //write header
+                        var headers = new string[] { 
+                        "VARIABLE_NM",
+                        "VARIABLE DESCRIPTION",
+                        "DATA_TYPE",
+                        "LENGTH",
+                        "CORE",
+                        "ORIGIN_CD",
+                        "MANDATORY",
+                        "CONTROLLED TERMINOLOGY",
+                        "CODED VALUE",
+                        "DECODE"
+                                                    };
+
+
+                        rowIndex++;
+                        row = new Row();
+
+                        for(int i=0;i<headers.Length;i++)
+                        {
+                            row.Append(
+                           createTextCell(i+1, rowIndex,
+                              headers[i],
+                              tableHeaderStyleIndex)
+                              );
+                        }
+
+                        data.AppendChild(row);
+
+#region "Getdata"
+
+                        var domainVarData =
+                        (
+                        from d in db.Domains
+                        where d.Id == dm.Id
+                        from v in d.Variables
+                        join svx in db.StudyDomainVarExclusions
+                        on new { VariableId = v.Id, DomainId = v.DomainId, StudyId = (int)d.StudyId } equals new { svx.VariableId, svx.DomainId, svx.StudyId } into g1
+                        from svx2 in g1.DefaultIfEmpty()
+
+                        select new
+                        {
+                            VariableObject = v,
+                            DomainId = d.Id,
+                            DomainName = d.Name,
+                            VaribleName = v.LableText + " (" + v.Name + ")",
+                            VariableId = v.Id,
+                            IsRequired = (v.Core == DataAccess.VariableCore.Req),
+                            CodeListIdInVar = v.CodeListId,
+                            IsVarExcluded = svx2 != null ? true : false
+                        }
+                        ).ToList();
+
+
+                        var codeListData =
+        (
+        from d in db.Domains
+        where d.Id == dm.Id
+        join v in db.Variables on d.Id equals v.DomainId
+
+        join vcl in db.CodeLists on v.CodeListId equals vcl.Id into gCL
+        from vcl2 in gCL
+
+        join cvl in db.CodeListValues on v.CodeListId equals cvl.CodeListId into gCLV
+        from clv2 in gCLV
+
+        join svx in db.StudyCodeListValueExclusions
+        on new { VariableId = v.Id, DomainId = v.DomainId, StudyId = (int)d.StudyId, CodeListValueId = clv2.Id } equals new { svx.VariableId, svx.DomainId, svx.StudyId, svx.CodeListValueId } into g1
+        from svx2 in g1.DefaultIfEmpty()
+        select new
+        {
+            DomainId = d.Id,
+            DomainName = d.Name,
+            VaribleName = v.LableText + " (" + v.Name + ")",
+            VariableId = v.Id,
+            CodeListIdInVar = v.CodeListId,
+            CodeListName = vcl2 != null ? vcl2.Name : null,
+            CodeListId = vcl2 != null ? (int?)vcl2.Id : null,
+            CodeListValueCode = clv2 != null ? clv2.Name : null,
+            CodeListValueDecode = clv2 != null ? clv2.Value : null,
+            CodeListValueId = clv2 != null ? (int?)clv2.Id : null,
+            IsCLVExcluded = svx2 != null ? true : false
+        }
+        ).ToList();
+#endregion
+
+                        foreach (var v in domainVarData)
+                        {
+                            if (!v.IsVarExcluded)
+                            {
+
+                                rowIndex++;
+                                row = new Row();
+                                int colIndex = 1;
+
+                               row.Append(createTextCell(colIndex++, rowIndex, v.VariableObject.Name,dataRowStyleIndex));
+                               row.Append(createTextCell(colIndex++, rowIndex, v.VariableObject.LableText, dataRowStyleIndex));
+                               row.Append(createTextCell(colIndex++, rowIndex, v.VariableObject.DataType.ToString(), dataRowStyleIndex));
+                               row.Append(createTextCell(colIndex++, rowIndex, v.VariableObject.Length.ToString(), dataRowStyleIndex));
+                               row.Append(createTextCell(colIndex++, rowIndex, v.VariableObject.Core.ToString(), dataRowStyleIndex));
+                               row.Append(createTextCell(colIndex++, rowIndex, v.VariableObject.Origin.ToString(), dataRowStyleIndex));
+                               row.Append(createTextCell(colIndex++, rowIndex, v.IsRequired ? "Yes" : "No", dataRowStyleIndex));
+
+
+                               if (v.CodeListIdInVar != null)
+                               {
+                                   var clvs = codeListData.Where(clv => clv.DomainId == v.DomainId && clv.VariableId == v.VariableId && clv.CodeListId == v.CodeListIdInVar && clv.IsCLVExcluded == false).ToList();
+
+
+                                   row.Append(createTextCell(colIndex++, rowIndex, clvs.First().CodeListName, dataRowStyleIndex));
+
+                                   var clCodeColIndex = colIndex++;
+                                   var clValueColIndex = colIndex++;
+
+                                   var localIndex = 0;
+
+                                   foreach (var clv in clvs)
+                                   {
+                                       localIndex++;
+
+                                       if (localIndex > 1)
+                                       {
+                                           for (int i = 1; i <= 8; i++)
+                                           {
+                                               Cell c = new Cell();
+                                               c.CellReference = getColumnName(i) + rowIndex;
+                                               c.StyleIndex = dataRowStyleIndex;
+                                               row.Append(c);
+                                           }
+                                       }
+
+                                       row.Append(createTextCell(clCodeColIndex, rowIndex, clv.CodeListValueCode, dataRowStyleIndex));
+
+                                       row.Append(createTextCell(clValueColIndex, rowIndex, clv.CodeListValueDecode, dataRowStyleIndex));
+
+                                       data.AppendChild(row);
+
+                                       if (localIndex < clvs.Count)
+                                       {
+                                           row = new Row();
+                                           rowIndex++;
+                                       }
+                                   }
+                               }
+                               else
+                               {
+                                   for (int i = 8; i <= 10; i++)
+                                   {
+                                       Cell c = new Cell();
+                                       c.CellReference = getColumnName(i) + rowIndex;
+                                       c.StyleIndex = dataRowStyleIndex;
+                                       row.Append(c);
+                                   }
+
+
+                                   data.AppendChild(row);
+                               }
+                            }
+                        }
+
+
+
+                    }
+                
+                
+                
+                    //foreach (DataColumn column in table.Columns)
+                    //{
+                    //    Cell headerCell = createTextCell(
+                    //        table.Columns.IndexOf(column) + 1,
+                    //        1,
+                    //        column.ColumnName,
+                    //        headerStyleIndex);
+
+                    //    header.AppendChild(headerCell);
+                    //}
+
+                    //data.AppendChild(header);
+
+                    /*
+                     * Create a set of basic cell styles for specific formats...
+                     * If you are controlling your table then you can simply create the styles you need,
+                     * this set of code is still intended to be generic.
+                     */
+                    _numberStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(3));
+                    _doubleStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(4));
+                    _dateStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(14));
+
+                    //loop through each data row
+                    
+                    //DataRow contentRow;
+
+                    //for (int i = 0; i < table.Rows.Count; i++)
+                    //{
+                    //    contentRow = table.Rows[i];
+                    //    data.AppendChild(createContentRow(contentRow, i + 2));                
+                    //}
+
+                }
+                
 
             }            
         }
@@ -206,11 +515,67 @@ namespace Lateral8.Articles.OpenXML
             return result;
         }
 
+
+        private UInt32Value createBorder(
+            Stylesheet styleSheet, bool top = true, bool bottom=true, bool left=true, bool right=true, bool diagonal = false)
+        {
+
+            Border border2 = new Border();
+
+
+            LeftBorder leftBorder2 = new LeftBorder() { Style = BorderStyleValues.Thin };
+            Color color1 = new Color() { Indexed = (UInt32Value)64U };
+
+            leftBorder2.Append(color1);
+
+            RightBorder rightBorder2 = new RightBorder() { Style = BorderStyleValues.Thin };
+            Color color2 = new Color() { Indexed = (UInt32Value)64U };
+
+            rightBorder2.Append(color2);
+
+            TopBorder topBorder2 = new TopBorder() { Style = BorderStyleValues.Thin };
+            Color color3 = new Color() { Indexed = (UInt32Value)64U };
+
+            topBorder2.Append(color3);
+
+            BottomBorder bottomBorder2 = new BottomBorder() { Style = BorderStyleValues.Thin };
+            Color color4 = new Color() { Indexed = (UInt32Value)64U };
+
+            bottomBorder2.Append(color4);
+            DiagonalBorder diagonalBorder2 = new DiagonalBorder();
+
+            if(left)
+            border2.Append(leftBorder2);
+
+            if(right)
+            border2.Append(rightBorder2);
+
+            if(top)
+                border2.Append(topBorder2);
+
+            if(bottom)
+                border2.Append(bottomBorder2);
+
+            if(diagonal)
+                border2.Append(diagonalBorder2);
+
+
+            styleSheet.Borders.Append(border2);
+
+            UInt32Value result = styleSheet.Borders.Count;
+            styleSheet.Borders.Count++;
+
+            return result;
+        }
+
+
         private UInt32Value createCellFormat(
             Stylesheet styleSheet,
             UInt32Value fontIndex,
             UInt32Value fillIndex,
-            UInt32Value numberFormatId)
+            UInt32Value numberFormatId,
+            UInt32Value borderIndexId =null
+            )
         {
             CellFormat cellFormat = new CellFormat();
             
@@ -224,6 +589,11 @@ namespace Lateral8.Articles.OpenXML
             {
                 cellFormat.NumberFormatId = numberFormatId;
                 cellFormat.ApplyNumberFormat = BooleanValue.FromBoolean(true);
+            }
+
+            if (borderIndexId != null)
+            {
+                cellFormat.BorderId = borderIndexId;
             }
 
             styleSheet.CellFormats.Append(cellFormat);

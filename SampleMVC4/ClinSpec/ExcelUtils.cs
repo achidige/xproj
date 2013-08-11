@@ -71,21 +71,21 @@ namespace ClinSpec
             //PatternFill patternFill2 = new PatternFill() { PatternType = PatternValues.Gray125 };
             //fill2.Append(patternFill2);
 
-            Fill fill2 = new Fill(
-              new PatternFill(
-                  new ForegroundColor()
-                  {
-                      Rgb = new HexBinaryValue()
-                      {
-                          Value =
-                          System.Drawing.ColorTranslator.ToHtml(
-                              System.Drawing.Color.FromArgb(146,208,80)).Replace("#", "")
-                      }
-                  })
-              {
-                  PatternType = PatternValues.Solid
-              }
-          );
+            Fill fill2 = new Fill()
+            {
+                PatternFill = new PatternFill()
+                {
+                    PatternType = PatternValues.Solid,
+                    ForegroundColor = new ForegroundColor()
+                    {
+                        Rgb = "FF000000"
+                    },
+                    BackgroundColor = new BackgroundColor()
+                    {
+                       Indexed=64
+                    }
+                }
+            };
 
 
             
@@ -111,14 +111,18 @@ namespace ClinSpec
 
             CellStyleFormats cellStyleFormats1 = new CellStyleFormats() { Count = (UInt32Value)1U };
             
-             CellFormat cellFormat1 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U };
+             CellFormat cellFormat1 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U , ApplyFill=true };
 
             cellStyleFormats1.Append(cellFormat1);
 
             CellFormats cellFormats1 = new CellFormats() { Count = (UInt32Value)1U };
-            CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U };
+            CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill=true };
 
             cellFormats1.Append(cellFormat2);
+
+            CellFormat cellFormat3 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+
+            cellFormats1.Append(cellFormat3);
 
             CellStyles cellStyles1 = new CellStyles() { Count = (UInt32Value)1U };
             CellStyle cellStyle1 = new CellStyle() { Name = "Normal", FormatId = (UInt32Value)0U, BuiltinId = (UInt32Value)0U };
@@ -593,6 +597,9 @@ namespace ClinSpec
          if (valueType != DocumentFormat.OpenXml.Spreadsheet.CellValues.Date) {
             cell.DataType = new DocumentFormat.OpenXml.EnumValue<DocumentFormat.OpenXml.Spreadsheet.CellValues>(valueType);
          }
+
+         
+          
 
          if (save) {
             worksheet.Save();
