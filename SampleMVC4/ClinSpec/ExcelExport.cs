@@ -35,10 +35,7 @@ namespace Lateral8.Articles.OpenXML
                 SpreadsheetDocument.Open(exportFile, true))
             {
                 WorkbookPart workbook = spreadsheet.WorkbookPart;
-                //create a reference to Sheet1
-                WorksheetPart worksheet = workbook.WorksheetParts.Last();
-                SheetData data = worksheet.Worksheet.GetFirstChild<SheetData>();
-
+                
                 
                 Stylesheet styleSheet = workbook.WorkbookStylesPart.Stylesheet;
 
@@ -100,6 +97,25 @@ namespace Lateral8.Articles.OpenXML
                         null,allBorderIndex);
 
 
+                //create the cell style by combining font/background
+                UInt32Value dataRowCodeListValueStyleIndex =
+                    createCellFormat(
+                        styleSheet,
+                        fontIndex,
+                        bgColorFillIndex,
+                        null,allBorderIndex,true);
+
+                
+                //create the cell style by combining font/background
+                UInt32Value dataRowCodeListDecodeStyleIndex =
+                    createCellFormat(
+                        styleSheet,
+                        fontIndex,
+                        bgColorFillIndex,
+                        null,allBorderIndex,false,true);
+
+
+
                 //build the formatted header style
                 
                 //set the background color style
@@ -117,22 +133,77 @@ namespace Lateral8.Articles.OpenXML
                         null,allBorderIndex);
 
 
+                //write header
+                var headers = new string[] { 
+                        "VARIABLE_NM",
+                        "VARIABLE DESCRIPTION",
+                        "DATA_TYPE",
+                        "LENGTH",
+                        "CORE",
+                        "ORIGIN_CD",
+                        "MANDATORY",
+                        "CONTROLLED TERMINOLOGY",
+                        "CODED VALUE",
+                        "DECODE"
+                                                    };
+
 
                 using (var db = new SpecToolModelContext())
                 {
 
-                  //  db.Studies.Attach(s);
+                    foreach (var dm in s.Domains)
+                    {
+                            DocumentFormat.OpenXml.Spreadsheet.Sheets sheets = spreadsheet.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
+                            DocumentFormat.OpenXml.Spreadsheet.Sheet sheet;
+                            DocumentFormat.OpenXml.Packaging.WorksheetPart worksheetPart;
+
+                            // Add the worksheetpart
+                            worksheetPart = spreadsheet.WorkbookPart.AddNewPart<DocumentFormat.OpenXml.Packaging.WorksheetPart>();
+
+                        
+
+                        
+                            worksheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet(new DocumentFormat.OpenXml.Spreadsheet.SheetData());
+
+
+                        //var columns = new Columns();
+                        //    for (int col = 0; col < 10; col++)
+                        //    {
+                        //        int width = headers[col].Length + 5;
+
+                        //        Column c = new Column() { Min = (UInt32)col + 1, Max = (UInt32)10 + 1, Width = width, CustomWidth = true };
+                        //        columns.Append(c);
+                        //    }
+
+                        //    worksheetPart.Worksheet.Append(columns);
+
+                        
+                            // Add the sheet and make relation to workbook
+                            sheet = new DocumentFormat.OpenXml.Spreadsheet.Sheet() {
+                            Id = spreadsheet.WorkbookPart.GetIdOfPart(worksheetPart),
+                            SheetId = (uint)(spreadsheet.WorkbookPart.Workbook.Sheets.Count() + 1),
+                            Name = dm.Name
+                            };
+                            sheets.Append(sheet);
+
+
+
+
+                            spreadsheet.WorkbookPart.Workbook.Save();
+         
+
+                        //create a reference to Sheet1
+                            WorksheetPart worksheet = worksheetPart;
+                        SheetData data = worksheet.Worksheet.GetFirstChild<SheetData>();
+
+                
+                  
                     int rowIndex = 1;
 
                     Row row = new Row();
 
                     row.RowIndex = (uint)rowIndex;
-                    /*
-                     146,208,80
-0,176,80
-221,217,196
-                     */
-
+                  
                     row.Append(
                     
                         createTextCell(1, rowIndex,
@@ -163,8 +234,7 @@ namespace Lateral8.Articles.OpenXML
 
                     data.AppendChild(row);
 
-                    foreach (var dm in s.Domains)
-                    {
+                   
                         rowIndex++;
                         row = new Row();
 
@@ -204,20 +274,6 @@ namespace Lateral8.Articles.OpenXML
 
 
 
-
-                        //write header
-                        var headers = new string[] { 
-                        "VARIABLE_NM",
-                        "VARIABLE DESCRIPTION",
-                        "DATA_TYPE",
-                        "LENGTH",
-                        "CORE",
-                        "ORIGIN_CD",
-                        "MANDATORY",
-                        "CONTROLLED TERMINOLOGY",
-                        "CODED VALUE",
-                        "DECODE"
-                                                    };
 
 
                         rowIndex++;
@@ -336,9 +392,9 @@ namespace Lateral8.Articles.OpenXML
                                            }
                                        }
 
-                                       row.Append(createTextCell(clCodeColIndex, rowIndex, clv.CodeListValueCode, dataRowStyleIndex));
+                                       row.Append(createTextCell(clCodeColIndex, rowIndex, clv.CodeListValueCode, dataRowCodeListValueStyleIndex));
 
-                                       row.Append(createTextCell(clValueColIndex, rowIndex, clv.CodeListValueDecode, dataRowStyleIndex));
+                                       row.Append(createTextCell(clValueColIndex, rowIndex, clv.CodeListValueDecode, dataRowCodeListDecodeStyleIndex));
 
                                        data.AppendChild(row);
 
@@ -363,49 +419,13 @@ namespace Lateral8.Articles.OpenXML
                                    data.AppendChild(row);
                                }
                             }
+
                         }
 
-
-
+                        Console.Write("STop");
                     }
-                
-                
-                
-                    //foreach (DataColumn column in table.Columns)
-                    //{
-                    //    Cell headerCell = createTextCell(
-                    //        table.Columns.IndexOf(column) + 1,
-                    //        1,
-                    //        column.ColumnName,
-                    //        headerStyleIndex);
-
-                    //    header.AppendChild(headerCell);
-                    //}
-
-                    //data.AppendChild(header);
-
-                    /*
-                     * Create a set of basic cell styles for specific formats...
-                     * If you are controlling your table then you can simply create the styles you need,
-                     * this set of code is still intended to be generic.
-                     */
-                    _numberStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(3));
-                    _doubleStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(4));
-                    _dateStyleId = createCellFormat(styleSheet, null, null, UInt32Value.FromUInt32(14));
-
-                    //loop through each data row
-                    
-                    //DataRow contentRow;
-
-                    //for (int i = 0; i < table.Rows.Count; i++)
-                    //{
-                    //    contentRow = table.Rows[i];
-                    //    data.AppendChild(createContentRow(contentRow, i + 2));                
-                    //}
-
+              
                 }
-                
-
             }            
         }
 
@@ -574,7 +594,10 @@ namespace Lateral8.Articles.OpenXML
             UInt32Value fontIndex,
             UInt32Value fillIndex,
             UInt32Value numberFormatId,
-            UInt32Value borderIndexId =null
+            UInt32Value borderIndexId =null,
+            bool DoAlignRight=false,
+            bool DoIndent=false
+
             )
         {
             CellFormat cellFormat = new CellFormat();
@@ -597,6 +620,13 @@ namespace Lateral8.Articles.OpenXML
             }
 
             styleSheet.CellFormats.Append(cellFormat);
+
+            if (DoAlignRight)
+                cellFormat.Alignment = new Alignment() { Horizontal = HorizontalAlignmentValues.Right };
+
+            if (DoIndent)
+                cellFormat.Alignment = new Alignment() { Indent =  1U};
+
 
             UInt32Value result = styleSheet.CellFormats.Count;
             styleSheet.CellFormats.Count++;

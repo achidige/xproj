@@ -135,13 +135,7 @@ namespace Lateral8.Articles.OpenXML
             bookViews1.Append(workbookView1);
 
             Sheets sheets1 = new Sheets();
-            Sheet sheet1 = new Sheet() { Name = "Sheet1", SheetId = (UInt32Value)1U, Id = "rId1" };
-            Sheet sheet2 = new Sheet() { Name = "Sheet2", SheetId = (UInt32Value)2U, Id = "rId2" };
-            Sheet sheet3 = new Sheet() { Name = "Sheet3", SheetId = (UInt32Value)3U, Id = "rId3" };
-
-            sheets1.Append(sheet1);
-            sheets1.Append(sheet2);
-            sheets1.Append(sheet3);
+            
             CalculationProperties calculationProperties1 = new CalculationProperties() { CalculationId = (UInt32Value)125725U };
 
             workbook1.Append(fileVersion1);
