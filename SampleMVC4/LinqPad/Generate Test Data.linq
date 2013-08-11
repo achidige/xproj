@@ -16,7 +16,8 @@ void Main()
 {
 //	SetupCompAndStudy();
 //
-AddDomain(2,2);
+
+//AddDomain(2,2);
 
 (
 from d in Domains
@@ -28,7 +29,7 @@ from d in Domains
 	let clvListFirst = 	clvList.FirstOrDefault()
 	//from clv in clvList
 		orderby clvList.Count descending
-	select new { DomainId=d.Id,DomainName=d.Name,VariableId=v.Id,VariablName=v.Name,v.CodeListId,clvList.Count, clvListFirstId= ((clvListFirst==null)?0:clvListFirst.Id) }
+	select new { d.IsStandard,d.StudyId, DomainId=d.Id,DomainName=d.Name,VariableId=v.Id,VariablName=v.Name,v.CodeListId,clvList.Count, clvListFirstId= ((clvListFirst==null)?0:clvListFirst.Id) }
 	
 ). Dump();	
 

@@ -25,7 +25,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;INFO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\packages\OpenXmlSdk.2.0.0\lib\net45\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -120,6 +123,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.0.0\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
@@ -244,6 +248,9 @@
     <Content Include="assets\prettyPhoto\js\jquery.prettyPhoto.js" />
     <Content Include="assets\sparkline\jquery.sparkline.min.js" />
     <Content Include="box.html" />
+    <Content Include="css\ClinSpec.css" />
+    <Content Include="css\gfonts.css" />
+    <Content Include="UpdateDomain.aspx" />
     <Content Include="css\flaty-responsive.css" />
     <Content Include="css\flaty.css" />
     <Content Include="Images\accent.png" />
@@ -295,6 +302,14 @@
     <Content Include="assets\font-awesome\font\fontawesome-webfontf77b.woff" />
     <Content Include="ManageDomains.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="ExportStudy.aspx" />
+    <Content Include="AddNewDomain.aspx" />
+    <Content Include="assets\gfonts\OpenSans-1.woff" />
+    <Content Include="assets\gfonts\OpenSans-2.woff" />
+    <Content Include="assets\gfonts\OpenSans-3.woff" />
+    <Content Include="assets\gfonts\OpenSans-4.woff" />
+    <Content Include="AddEditVariable.aspx" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -323,9 +338,11 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
+    <Content Include="StudyManager.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="UserControls\AlertBox.ascx" />
+    <Content Include="UserControls\ConfirmBox.ascx" />
     <Content Include="UserControls\NavBar.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -374,12 +391,22 @@
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="ExcelUtils.cs" />
+    <Compile Include="UpdateDomain.aspx.cs">
+      <DependentUpon>UpdateDomain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="UpdateDomain.aspx.designer.cs">
+      <DependentUpon>UpdateDomain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Messages.cs" />
+    <Compile Include="ModelDisplayExtension.cs" />
+    <Compile Include="StudyManager.aspx.cs">
+      <DependentUpon>StudyManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudyManager.aspx.designer.cs">
+      <DependentUpon>StudyManager.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -391,6 +418,20 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlertBox.ascx.cs">
+      <DependentUpon>AlertBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\AlertBox.ascx.designer.cs">
+      <DependentUpon>AlertBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ConfirmBox.ascx.cs">
+      <DependentUpon>ConfirmBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\ConfirmBox.ascx.designer.cs">
+      <DependentUpon>ConfirmBox.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\NavBar.ascx.cs">
       <DependentUpon>NavBar.ascx</DependentUpon>
@@ -413,10 +454,39 @@
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExportStudy.aspx.cs">
+      <DependentUpon>ExportStudy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportStudy.aspx.designer.cs">
+      <DependentUpon>ExportStudy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddNewDomain.aspx.cs">
+      <DependentUpon>AddNewDomain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddNewDomain.aspx.designer.cs">
+      <DependentUpon>AddNewDomain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditVariable.aspx.cs">
+      <DependentUpon>AddEditVariable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddEditVariable.aspx.designer.cs">
+      <DependentUpon>AddEditVariable.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
+    <Folder Include="Exports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
@@ -449,7 +519,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>50991</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:51858/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

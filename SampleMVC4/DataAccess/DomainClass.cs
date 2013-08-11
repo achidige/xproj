@@ -14,7 +14,7 @@ namespace DataAccess
     public enum DomainClass : int
     {
         EVENTS = 1,
-        INTERVENSIONS = 2,
+        INTERVENTIONS = 2,
         FINDINGS = 3,
         SPECIAL_PURPOSE_DOMAINS = 4
     }

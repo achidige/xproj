@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinSpec", "ClinSpec\ClinSpec.csproj", "{F9C85831-761F-4B32-86A7-B512209AF7E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitDataSetup", "InitDataSetup\InitDataSetup.csproj", "{BCC9D41F-2E6C-49A4-8373-4077D557FC30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{F9C85831-761F-4B32-86A7-B512209AF7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9C85831-761F-4B32-86A7-B512209AF7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9C85831-761F-4B32-86A7-B512209AF7E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCC9D41F-2E6C-49A4-8373-4077D557FC30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCC9D41F-2E6C-49A4-8373-4077D557FC30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCC9D41F-2E6C-49A4-8373-4077D557FC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCC9D41F-2E6C-49A4-8373-4077D557FC30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

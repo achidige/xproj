@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 08/04/2013 15:12:41
+-- Date Created: 08/09/2013 19:06:31
 -- Generated from EDMX file: C:\Users\achidige\Documents\GitHub\xproj\SampleMVC4\DataAccess\SpecToolModel.edmx
 -- --------------------------------------------------
 
@@ -17,8 +17,8 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_ComponentStudy]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Studies] DROP CONSTRAINT [FK_ComponentStudy];
+IF OBJECT_ID(N'[dbo].[FK_CodeListCodeList]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CodeLists] DROP CONSTRAINT [FK_CodeListCodeList];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CodeListCodeListValues]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CodeListValues] DROP CONSTRAINT [FK_CodeListCodeListValues];
@@ -26,52 +26,58 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CodeListVariable]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Variables] DROP CONSTRAINT [FK_CodeListVariable];
 GO
+IF OBJECT_ID(N'[dbo].[FK_ComponentStudy]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Studies] DROP CONSTRAINT [FK_ComponentStudy];
+GO
 IF OBJECT_ID(N'[dbo].[FK_DomainVariable]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Variables] DROP CONSTRAINT [FK_DomainVariable];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StudyDomain]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Domains] DROP CONSTRAINT [FK_StudyDomain];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SourceDomainDomainRelation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Domains] DROP CONSTRAINT [FK_SourceDomainDomainRelation];
-GO
-IF OBJECT_ID(N'[dbo].[FK_VariableVariable]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Variables] DROP CONSTRAINT [FK_VariableVariable];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CodeListCodeList]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CodeLists] DROP CONSTRAINT [FK_CodeListCodeList];
+IF OBJECT_ID(N'[dbo].[FK_MetaDataVersionCodeList]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CodeLists] DROP CONSTRAINT [FK_MetaDataVersionCodeList];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MetaDataVersionDomain]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Domains] DROP CONSTRAINT [FK_MetaDataVersionDomain];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MetaDataVersionCodeList]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CodeLists] DROP CONSTRAINT [FK_MetaDataVersionCodeList];
+IF OBJECT_ID(N'[dbo].[FK_SourceDomainDomainRelation]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Domains] DROP CONSTRAINT [FK_SourceDomainDomainRelation];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StudyDomain]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Domains] DROP CONSTRAINT [FK_StudyDomain];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VariableVariable]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Variables] DROP CONSTRAINT [FK_VariableVariable];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Compounds]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Compounds];
-GO
-IF OBJECT_ID(N'[dbo].[Studies]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Studies];
-GO
 IF OBJECT_ID(N'[dbo].[CodeLists]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CodeLists];
 GO
 IF OBJECT_ID(N'[dbo].[CodeListValues]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CodeListValues];
 GO
+IF OBJECT_ID(N'[dbo].[Compounds]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Compounds];
+GO
 IF OBJECT_ID(N'[dbo].[Domains]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Domains];
 GO
-IF OBJECT_ID(N'[dbo].[Variables]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Variables];
-GO
 IF OBJECT_ID(N'[dbo].[MetaDataVersions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[MetaDataVersions];
+GO
+IF OBJECT_ID(N'[dbo].[Studies]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Studies];
+GO
+IF OBJECT_ID(N'[SpecToolModelStoreContainer].[StudyCodeListValueExclusion]', 'U') IS NOT NULL
+    DROP TABLE [SpecToolModelStoreContainer].[StudyCodeListValueExclusion];
+GO
+IF OBJECT_ID(N'[SpecToolModelStoreContainer].[StudyDomainVarExclusion]', 'U') IS NOT NULL
+    DROP TABLE [SpecToolModelStoreContainer].[StudyDomainVarExclusion];
+GO
+IF OBJECT_ID(N'[dbo].[Variables]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Variables];
 GO
 
 -- --------------------------------------------------
@@ -89,7 +95,7 @@ GO
 CREATE TABLE [dbo].[Studies] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [ComponentId] int  NOT NULL
+    [CompoundId] int  NOT NULL
 );
 GO
 
@@ -163,6 +169,25 @@ CREATE TABLE [dbo].[MetaDataVersions] (
 );
 GO
 
+-- Creating table 'StudyCodeListValueExclusions'
+CREATE TABLE [dbo].[StudyCodeListValueExclusions] (
+    [StudyId] int  NOT NULL,
+    [DomainId] int  NOT NULL,
+    [VariableId] int  NOT NULL,
+    [CodeListValueId] int  NOT NULL,
+    [Id] int IDENTITY(1,1) NOT NULL
+);
+GO
+
+-- Creating table 'StudyDomainVarExclusions'
+CREATE TABLE [dbo].[StudyDomainVarExclusions] (
+    [StudyId] int  NOT NULL,
+    [VariableId] int  NOT NULL,
+    [DomainId] int  NOT NULL,
+    [Id] int IDENTITY(1,1) NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -209,14 +234,26 @@ ADD CONSTRAINT [PK_MetaDataVersions]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [StudyId], [DomainId], [VariableId], [CodeListValueId], [Id] in table 'StudyCodeListValueExclusions'
+ALTER TABLE [dbo].[StudyCodeListValueExclusions]
+ADD CONSTRAINT [PK_StudyCodeListValueExclusions]
+    PRIMARY KEY CLUSTERED ([StudyId], [DomainId], [VariableId], [CodeListValueId], [Id] ASC);
+GO
+
+-- Creating primary key on [StudyId], [VariableId], [DomainId], [Id] in table 'StudyDomainVarExclusions'
+ALTER TABLE [dbo].[StudyDomainVarExclusions]
+ADD CONSTRAINT [PK_StudyDomainVarExclusions]
+    PRIMARY KEY CLUSTERED ([StudyId], [VariableId], [DomainId], [Id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [ComponentId] in table 'Studies'
+-- Creating foreign key on [CompoundId] in table 'Studies'
 ALTER TABLE [dbo].[Studies]
 ADD CONSTRAINT [FK_ComponentStudy]
-    FOREIGN KEY ([ComponentId])
+    FOREIGN KEY ([CompoundId])
     REFERENCES [dbo].[Compounds]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -224,7 +261,7 @@ ADD CONSTRAINT [FK_ComponentStudy]
 -- Creating non-clustered index for FOREIGN KEY 'FK_ComponentStudy'
 CREATE INDEX [IX_FK_ComponentStudy]
 ON [dbo].[Studies]
-    ([ComponentId]);
+    ([CompoundId]);
 GO
 
 -- Creating foreign key on [CodeListId] in table 'CodeListValues'

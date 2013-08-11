@@ -8,6 +8,7 @@ using DataAccess;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Data;
+using DataAccess;
 
 namespace DataAccess
 {
@@ -37,10 +38,12 @@ namespace DataAccess
 
         static void Main(string[] args)
         {
-
             LoadDomainData();
 
-          //  LoadCodeListData();
+            LoadCodeListData();
+
+            StandardTemplates();
+            
 
             WritePrompt("Ener key to exit");
         }
@@ -294,6 +297,97 @@ namespace DataAccess
 
         }
 
+        static void StandardTemplates()
+        {
+            DataTable dt = GetInputdate("stditems.xls", "select * from [STDITEMS$] where [Class]<>''");
+            using (var db = new SpecToolModelContext())
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    string domainClass = row["CLASS"].ToString();
+                    
+                    string templateDomainNameAbbr = domainClass +"-DomainAbbr";
+                    string templateDomainName = domainClass +"-DomainName";
+
+                    var dmCheck = (from dm in db.Domains
+                               where dm.IsTemplate == true && dm.Name == templateDomainNameAbbr
+                              && dm.MetaDataVersionId==1
+                              select dm
+                              );
+
+                    var dm1 = dmCheck.FirstOrDefault();
+
+                    if (dm1 == null)
+                    {
+                        db.Domains.Add(new Domain()
+                        {
+                             Class = (DomainClass)Enum.Parse(typeof(DomainClass),domainClass.ToUpper()),
+                             Name = templateDomainNameAbbr,
+                             IsTemplate=true,
+                             Description = templateDomainName,
+                             IsStandard=true,
+                             MetaDataVersionId=1,
+                             StructureDescription=row["DomainStructures"].ToString(),
+                             CommentText=""
+                        });
+
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex) 
+                        {
+                            Console.Write(ex);
+                                             
+                        }
+                    }
+
+                    var dm2 = dmCheck.FirstOrDefault();
+
+
+                    try
+                    {
+                        dm2.Variables.Add(new Variable()
+                        {
+                            Name = (row["AddDomain"].ToString() == "Yes") ? "{DomainName}" + row["VARIABLENAMEGENERAL"].ToString() : row["VARIABLENAMEGENERAL"].ToString(),
+                            BaseName = (row["AddDomain"].ToString() == "Yes") ? "{DomainName}" + row["VARIABLENAMEGENERAL"].ToString() : row["VARIABLENAMEGENERAL"].ToString(),
+                            LableText = row["LABEL"].ToString(),
+                            DataType = (VariableDataType)Enum.Parse(typeof(VariableDataType), row["DATATYPE"].ToString()),
+                            Role = (VariableRole)Enum.Parse(typeof(VariableRole), row["Role"].ToString().Replace(" ","_")),
+                            Core = (VariableCore)Enum.Parse(typeof(VariableCore), row["Core"].ToString()),
+                            Length = Convert.ToInt32(row["STDLEN"]),
+                            IsStandard = true,
+                            IsTemplate = true,
+                            SignificantDigits = Convert.ToInt32(row["FIXLEN"].ToString()),
+
+                            //origin value
+                            Origin = VariableOrgin.CRF
+                        });
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.Write(ex);
+                    }
+
+                  
+
+
+                
+                }
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+
+                }
+            }
+        }
    
 
         //static void DumpData()

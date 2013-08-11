@@ -32,6 +32,7 @@
     <!--flaty css styles-->
     <link rel="stylesheet" href="css/flaty.css">
     <link rel="stylesheet" href="css/flaty-responsive.css">
+    <link rel="stylesheet" href="css/clinspec.css">
 
     <link rel="shortcut icon" href="img/favicon.html">
 
@@ -180,7 +181,7 @@
 
             <div class="page-title">
                 <div>
-                    <h1> </h1>
+                    <h1><%: Page.Title %></h1>
                 </div>
             </div>
 
@@ -188,14 +189,16 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="index-2.html">Home</a>
+                        <a href="/Default.aspx">Home</a>
                         <span class="divider"><i class="icon-angle-right"></i></span>
                     </li>
-                    <li class="active">Box</li>
+                    <li class="active"><%: Page.Title %></li>
                 </ul>
             </div>
 
-    <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            <div style="min-height:500px">
+                    <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            </div>
 
             <footer>
                 <p><%: DateTime.Now.Year %> © [CompanyName].</p>

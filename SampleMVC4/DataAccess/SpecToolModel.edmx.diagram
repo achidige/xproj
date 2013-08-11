@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cda79d2d347842638994b903be8a7439" Name="Diagram1" ZoomLevel="81" >
-        <EntityTypeShape EntityType="SpecToolModel.Compound" Width="1.5" PointX="10.625" PointY="0.5" IsExpanded="true" />
+      <Diagram DiagramId="cda79d2d347842638994b903be8a7439" Name="Diagram1" ZoomLevel="80" >
+        <EntityTypeShape EntityType="SpecToolModel.Compound" Width="1.5" PointX="16.5" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SpecToolModel.Study" Width="1.5" PointX="14.375" PointY="2.125" IsExpanded="true" />
         <AssociationConnector Association="SpecToolModel.ComponentStudy" />
         <EntityTypeShape EntityType="SpecToolModel.CodeList" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
@@ -22,6 +22,8 @@
         <EntityTypeShape EntityType="SpecToolModel.MetaDataVersion" Width="1.5" PointX="10.75" PointY="5.375" />
         <AssociationConnector Association="SpecToolModel.MetaDataVersionDomain" />
         <AssociationConnector Association="SpecToolModel.MetaDataVersionCodeList" />
+        <EntityTypeShape EntityType="SpecToolModel.StudyCodeListValueExclusion" Width="1.5" PointX="4.0494812168411363" PointY="18.858288535316611" />
+        <EntityTypeShape EntityType="SpecToolModel.StudyDomainVarExclusion" Width="1.5" PointX="8.6256641916118859" PointY="13.460736191580415" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -19,6 +19,7 @@ namespace DataAccess
         Synonym_Qualifier = 4,
         Timing = 5,
         Topic = 6,
-        Variable_Qualifier = 7
+        Variable_Qualifier = 7,
+        Grouping_Qualifier = 8
     }
 }

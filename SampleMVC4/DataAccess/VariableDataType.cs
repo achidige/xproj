@@ -14,6 +14,8 @@ namespace DataAccess
     public enum VariableDataType : int
     {
         text = 1,
-        @float = 2
+        @float = 2,
+        integer = 3,
+        datetime = 4
     }
 }

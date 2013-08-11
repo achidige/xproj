@@ -1,0 +1,45 @@
+﻿/*
+.Variable-rowstyle {
+background-color: rgb(88, 177, 252);
+color:white;
+}
+
+.CodeList-rowstyle {
+background-color: rgb(182, 209, 242);
+text-indent:5px;
+color:white;
+}
+
+.codelist-namestyle {
+   font-style:italic;
+   color:green;
+}
+
+.header-rowstyle {
+    background-color: #248dc1;
+    color:white;
+    padding: 5px;
+}
+
+*/
+
+.Variable-rowstyle {
+}
+
+.CodeList-rowstyle {
+}
+
+.codelist-namestyle {
+   font-style:italic;
+   color:green;
+}
+
+.header-rowstyle {
+    background-color: #248dc1;
+    color:white;
+    padding: 5px;
+}
+
+.row-exclude {
+    font-variant-caps:
+}

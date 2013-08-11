@@ -13,6 +13,8 @@
     <EntitySet Name="Domains" EntityType="SpecToolModel.Store.Domains" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Variables" EntityType="SpecToolModel.Store.Variables" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MetaDataVersions" EntityType="SpecToolModel.Store.MetaDataVersions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudyCodeListValueExclusions" EntityType="SpecToolModel.Store.StudyCodeListValueExclusions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudyDomainVarExclusions" EntityType="SpecToolModel.Store.StudyDomainVarExclusions" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ComponentStudy" Association="SpecToolModel.Store.ComponentStudy">
       <End Role="Component" EntitySet="Compounds" />
       <End Role="Study" EntitySet="Studies" />
@@ -67,7 +69,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ComponentId" Type="int" Nullable="false" />
+    <Property Name="CompoundId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CodeLists">
     <Key>
@@ -139,6 +141,32 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Version" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="StudyCodeListValueExclusions">
+    <Key>
+      <PropertyRef Name="StudyId" />
+      <PropertyRef Name="DomainId" />
+      <PropertyRef Name="VariableId" />
+      <PropertyRef Name="CodeListValueId" />
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="StudyId" Type="int" Nullable="false" />
+    <Property Name="DomainId" Type="int" Nullable="false" />
+    <Property Name="VariableId" Type="int" Nullable="false" />
+    <Property Name="CodeListValueId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudyDomainVarExclusions">
+    <Key>
+      <PropertyRef Name="StudyId" />
+      <PropertyRef Name="VariableId" />
+      <PropertyRef Name="DomainId" />
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="StudyId" Type="int" Nullable="false" />
+    <Property Name="VariableId" Type="int" Nullable="false" />
+    <Property Name="DomainId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
   <Association Name="ComponentStudy">
     <End Role="Component" Type="SpecToolModel.Store.Compounds" Multiplicity="1" />
     <End Role="Study" Type="SpecToolModel.Store.Studies" Multiplicity="*" />
@@ -147,7 +175,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Study">
-        <PropertyRef Name="ComponentId" />
+        <PropertyRef Name="CompoundId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -311,18 +339,20 @@
             <End Role="MetaDataVersion" EntitySet="MetaDataVersions" />
             <End Role="CodeList" EntitySet="CodeLists" />
           </AssociationSet>
+          <EntitySet Name="StudyCodeListValueExclusions" EntityType="SpecToolModel.StudyCodeListValueExclusion" />
+          <EntitySet Name="StudyDomainVarExclusions" EntityType="SpecToolModel.StudyDomainVarExclusion" />
           </EntityContainer>
         <EntityType Name="Compound">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Studies" Relationship="SpecToolModel.ComponentStudy" FromRole="Component" ToRole="Study" />
         </EntityType>
         <EnumType Name="DomainClass">
           <Member Name="EVENTS" Value="1" />
-          <Member Name="INTERVENSIONS" Value="2" />
+          <Member Name="INTERVENTIONS" Value="2" />
           <Member Name="FINDINGS" Value="3" />
           <Member Name="SPECIAL_PURPOSE_DOMAINS" Value="4" />
         </EnumType>
@@ -331,7 +361,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Compound" Relationship="SpecToolModel.ComponentStudy" FromRole="Study" ToRole="Component" />
           <Property Type="Int32" Name="CompoundId" Nullable="false" />
           <NavigationProperty Name="Domains" Relationship="SpecToolModel.StudyDomain" FromRole="Study" ToRole="Domain" />
@@ -353,12 +383,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CodeListValues" Relationship="SpecToolModel.CodeListCodeListValues" FromRole="CodeList" ToRole="CodeListValues" />
           <Property Type="Int32" Name="VariableId" Nullable="true" />
           <NavigationProperty Name="Variables" Relationship="SpecToolModel.CodeListVariable" FromRole="CodeList" ToRole="Variable" />
-          <Property Type="String" Name="DefinitionText" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="DefinitionText" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="SpecToolModel.VariableDataType" Name="DataType" Nullable="false" />
           <Property Type="Boolean" Name="IsStandard" Nullable="false" />
           <Property Type="Boolean" Name="IsTemplate" Nullable="false" />
@@ -373,8 +403,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Value" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CodeList" Relationship="SpecToolModel.CodeListCodeListValues" FromRole="CodeListValues" ToRole="CodeList" />
           <Property Type="Int32" Name="CodeListId" Nullable="false" />
         </EntityType>
@@ -395,11 +425,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="SpecToolModel.DomainClass" Name="Class" Nullable="false" />
-          <Property Type="String" Name="StructureDescription" Nullable="false" />
-          <Property Type="String" Name="CommentText" Nullable="false" />
+          <Property Type="String" Name="StructureDescription" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="CommentText" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Variables" Relationship="SpecToolModel.DomainVariable" FromRole="Domain" ToRole="Variable" />
           <Property Type="Boolean" Name="IsStandard" Nullable="false" />
           <Property Type="Boolean" Name="IsTemplate" Nullable="false" />
@@ -416,16 +446,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="BaseName" Nullable="false" />
-          <Property Type="String" Name="LableText" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="BaseName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="LableText" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="SpecToolModel.VariableCore" Name="Core" Nullable="false" />
           <Property Type="SpecToolModel.VariableOrgin" Name="Origin" Nullable="false" />
           <Property Type="SpecToolModel.VaraibleMandatory" Name="Mandatory" Nullable="false" />
           <Property Type="SpecToolModel.VariableRole" Name="Role" Nullable="false" />
           <NavigationProperty Name="CodeList" Relationship="SpecToolModel.CodeListVariable" FromRole="Variable" ToRole="CodeList" />
           <Property Type="Int32" Name="CodeListId" Nullable="true" />
-          <Property Type="String" Name="CommentText" annotation:StoreGeneratedPattern="None" Nullable="true" />
+          <Property Type="String" Name="CommentText" annotation:StoreGeneratedPattern="None" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Domain" Relationship="SpecToolModel.DomainVariable" FromRole="Variable" ToRole="Domain" />
           <Property Type="Int32" Name="DomainId" Nullable="false" />
           <Property Type="Boolean" Name="IsStandard" Nullable="false" />
@@ -440,6 +470,8 @@
         <EnumType Name="VariableDataType">
           <Member Name="text" Value="1" />
           <Member Name="float" Value="2" />
+          <Member Name="integer" Value="3" />
+          <Member Name="datetime" Value="4" />
         </EnumType>
         <EnumType Name="VariableCore" >
           <Member Name="Req" Value="1" />
@@ -465,6 +497,7 @@
           <Member Name="Timing" Value="5" />
           <Member Name="Topic" Value="6" />
           <Member Name="Variable_Qualifier" Value="7" />
+          <Member Name="Grouping_Qualifier" Value="8" />
         </EnumType>
         <Association Name="CodeListVariable">
           <End Type="SpecToolModel.CodeList" Role="CodeList" Multiplicity="0..1" />
@@ -545,8 +578,8 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Domains" Relationship="SpecToolModel.MetaDataVersionDomain" FromRole="MetaDataVersion" ToRole="Domain" />
           <NavigationProperty Name="CodeLists" Relationship="SpecToolModel.MetaDataVersionCodeList" FromRole="MetaDataVersion" ToRole="CodeList" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Version" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Version" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="MetaDataVersionDomain">
           <End Type="SpecToolModel.MetaDataVersion" Role="MetaDataVersion" Multiplicity="0..1" />
@@ -572,6 +605,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StudyCodeListValueExclusion">
+          <Key>
+            <PropertyRef Name="StudyId" />
+            <PropertyRef Name="DomainId" />
+            <PropertyRef Name="VariableId" />
+            <PropertyRef Name="CodeListValueId" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="StudyId" Nullable="false" />
+          <Property Type="Int32" Name="DomainId" Nullable="false" />
+          <Property Type="Int32" Name="VariableId" Nullable="false" />
+          <Property Type="Int32" Name="CodeListValueId" Nullable="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="StudyDomainVarExclusion">
+          <Key>
+            <PropertyRef Name="StudyId" />
+            <PropertyRef Name="VariableId" />
+            <PropertyRef Name="DomainId" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="StudyId" Nullable="false" />
+          <Property Type="Int32" Name="VariableId" Nullable="false" />
+          <Property Type="Int32" Name="DomainId" Nullable="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -591,7 +650,7 @@
         <MappingFragment StoreEntitySet="Studies">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="CompoundId" ColumnName="ComponentId" />
+          <ScalarProperty Name="CompoundId" ColumnName="CompoundId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -667,6 +726,27 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudyCodeListValueExclusions">
+      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.StudyCodeListValueExclusion)">
+        <MappingFragment StoreEntitySet="StudyCodeListValueExclusions">
+          <ScalarProperty Name="StudyId" ColumnName="StudyId" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="VariableId" ColumnName="VariableId" />
+          <ScalarProperty Name="CodeListValueId" ColumnName="CodeListValueId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudyDomainVarExclusions">
+      <EntityTypeMapping TypeName="IsTypeOf(SpecToolModel.StudyDomainVarExclusion)">
+        <MappingFragment StoreEntitySet="StudyDomainVarExclusions">
+          <ScalarProperty Name="StudyId" ColumnName="StudyId" />
+          <ScalarProperty Name="VariableId" ColumnName="VariableId" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

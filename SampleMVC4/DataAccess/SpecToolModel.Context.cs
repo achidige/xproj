@@ -32,5 +32,7 @@ namespace DataAccess
         public DbSet<Domain> Domains { get; set; }
         public DbSet<Variable> Variables { get; set; }
         public DbSet<MetaDataVersion> MetaDataVersions { get; set; }
+        public DbSet<StudyCodeListValueExclusion> StudyCodeListValueExclusions { get; set; }
+        public DbSet<StudyDomainVarExclusion> StudyDomainVarExclusions { get; set; }
     }
 }
