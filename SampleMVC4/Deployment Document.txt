@@ -1,0 +1,28 @@
+Prerequesits:
+
+.Net 4.5
+http://www.microsoft.com/en-us/download/confirmation.aspx?id=30653
+
+SQL Express 2012 - localdb
+IIS Express
+
+
+SQL Server
+
+"C:\Program Files\Microsoft SQL Server\110\T
+ools\Binn\SqlLocalDB.exe" start v11.0
+LocalDB instance "v11.0" started.
+
+"C:\Program Files\Microsoft SQL Server\110\Tools\Binn\SqlLocalDB.exe" create LocalDBApp1
+
+- Start SQL Server Instance by using the following commands
+
+- could only attach the datbase and could not restored the db.
+
+--the named pipe connection is this.
+
+np:\\.\pipe\LOCALDB#A7224596\tsql\query
+
+-- use this command to start the site
+  
+Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-ClinSpec-20130802200338;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\SpecToolDb.mdf

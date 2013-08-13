@@ -132,6 +132,10 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="App_Data\SpecToolDb.mdf" />
+    <Content Include="App_Data\SpecToolDb_log.ldf">
+      <DependentUpon>SpecToolDb.mdf</DependentUpon>
+    </Content>
     <Content Include="assets\bootstrap-colorpicker\css\colorpicker.css" />
     <Content Include="assets\bootstrap-colorpicker\img\alpha.png" />
     <Content Include="assets\bootstrap-colorpicker\img\hue.png" />
@@ -310,6 +314,8 @@
     <Content Include="assets\gfonts\OpenSans-3.woff" />
     <Content Include="assets\gfonts\OpenSans-4.woff" />
     <Content Include="AddEditVariable.aspx" />
+    <None Include="Properties\PublishProfiles\FilePublish.pubxml" />
+    <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -486,7 +492,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\" />
     <Folder Include="Exports\" />
   </ItemGroup>
